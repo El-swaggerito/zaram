@@ -1,6 +1,12 @@
 import Link from "next/link";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import {
+  Wifi,
+  CarFront,
+  Utensils,
+  ConciergeBell,
+  BedDouble,
+  Headphones,
+} from "lucide-react";
 
 const rooms = [
   {
@@ -30,26 +36,32 @@ const amenities = [
   {
     name: "Free Wi-Fi",
     detail: "High-speed access",
+    icon: Wifi,
   },
   {
     name: "Secure Parking",
     detail: "Convenient parking",
+    icon: CarFront,
   },
   {
     name: "Restaurant",
     detail: "Fresh daily dining",
+    icon: Utensils,
   },
   {
     name: "Room Service",
     detail: "Delivered to your room",
+    icon: ConciergeBell,
   },
   {
     name: "Comfort Rooms",
     detail: "Relaxing accommodation",
+    icon: BedDouble,
   },
   {
     name: "Guest Support",
     detail: "Helpful assistance",
+    icon: Headphones,
   },
 ];
 
@@ -82,7 +94,7 @@ function ImagePlaceholder({
 export default function HomePage() {
   return (
     <>
-      <Header />
+      
 
       <main className="bg-[#F7F3EA] pt-20">
 
@@ -403,27 +415,35 @@ export default function HomePage() {
 
             <div className="mt-16 grid grid-cols-2 gap-y-10 md:grid-cols-3 lg:grid-cols-6">
 
-              {amenities.map((amenity, index) => (
-                <div
-                  key={amenity.name}
-                  className={[
-                    "flex flex-col items-center px-4 text-center",
-                    index > 0 ? "lg:border-l lg:border-[#0B4A32]/10" : "",
-                  ].join(" ")}
-                >
-                  <div className="mb-5 h-7 w-7 border border-[#C89D35]">
-                    <div className="m-[6px] h-[13px] w-[13px] bg-[#C89D35]" />
+              {amenities.map((amenity, index) => {
+                const Icon = amenity.icon;
+
+                return (
+                  <div
+                    key={amenity.name}
+                    className={[
+                      "flex flex-col items-center px-4 text-center",
+                      index > 0 ? "lg:border-l lg:border-[#0B4A32]/10" : "",
+                    ].join(" ")}
+                  >
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center text-[#C89D35]">
+                      <Icon
+                        size={30}
+                        strokeWidth={1.6}
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <h3 className="font-serif text-lg font-semibold text-[#0B4A32]">
+                      {amenity.name}
+                    </h3>
+
+                    <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.10em] text-[#404943]/65">
+                      {amenity.detail}
+                    </p>
                   </div>
-
-                  <h3 className="font-serif text-lg font-semibold text-[#0B4A32]">
-                    {amenity.name}
-                  </h3>
-
-                  <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.10em] text-[#404943]/65">
-                    {amenity.detail}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -468,7 +488,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <Footer />
+      
     </>
   );
 }
