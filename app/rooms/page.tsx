@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Rooms",
@@ -189,15 +190,15 @@ export default function RoomsPage() {
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-5 pb-12 sm:px-6 md:pb-16 lg:px-10">
 
           <div className="max-w-xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
+            <p className="zaram-hero-reveal zaram-delay-1 text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
               Rooms & Suites
             </p>
 
-            <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight text-[#F7F3EA] md:text-6xl">
+            <h1 className="zaram-hero-reveal zaram-delay-2 mt-3 font-serif text-4xl font-semibold leading-tight text-[#F7F3EA] md:text-6xl">
               Find Your Perfect Stay
             </h1>
 
-            <p className="mt-4 max-w-[560px] text-[15px] leading-7 text-[#DFE4DA]">
+            <p className="zaram-hero-reveal zaram-delay-3 mt-4 max-w-[560px] text-[15px] leading-7 text-[#DFE4DA]">
               Comfortable spaces designed for rest, convenience and a
               relaxing stay at Zaram Hotels and Garden.
             </p>
@@ -215,6 +216,7 @@ export default function RoomsPage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-10">
 
             <div className="md:col-span-6">
+              <Reveal direction="left">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
                 Accommodations
               </p>
@@ -222,14 +224,17 @@ export default function RoomsPage() {
               <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight text-[#00321F] md:text-5xl">
                 Comfort Designed Around You
               </h2>
+              </Reveal>
             </div>
 
             <div className="md:col-span-6 md:pt-6">
+              <Reveal direction="right" delay={120}>
               <p className="text-base leading-8 text-[#404943] md:text-lg">
                 Zaram Hotels and Garden offers thoughtfully designed room
                 options tailored for individual travellers, couples, and
                 guests seeking additional space and refined convenience.
               </p>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -249,13 +254,19 @@ export default function RoomsPage() {
           <div className="grid grid-cols-1 bg-[#F7F3EA] shadow-sm lg:grid-cols-12">
 
             <div className="min-h-[320px] lg:col-span-7 lg:min-h-[520px]">
-              <ImagePlaceholder
+              <Reveal direction="left">
+                <div className="zaram-image-hover h-full">
+                  <ImagePlaceholder
                 label="Standard Room Image"
                 className="min-h-[320px]"
-              />
+                  />
+                </div>
+              </Reveal>
             </div>
 
             <div className="flex flex-col justify-between p-7 sm:p-10 lg:col-span-5">
+              <Reveal direction="right" delay={120}>
+                <div className="flex h-full flex-col justify-between">
 
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
@@ -298,6 +309,9 @@ export default function RoomsPage() {
                 </a>
               </div>
             </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
 
@@ -311,6 +325,8 @@ export default function RoomsPage() {
             <div className="grid grid-cols-1 bg-[#0B4A32] shadow-md lg:grid-cols-12">
 
               <div className="order-2 flex flex-col justify-between p-7 sm:p-10 lg:order-1 lg:col-span-5">
+              <Reveal direction="left">
+                <div className="flex h-full flex-col justify-between">
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
@@ -352,13 +368,20 @@ export default function RoomsPage() {
                   </a>
                 </div>
               </div>
+                </div>
+              </Reveal>
+            </div>
 
               <div className="order-1 min-h-[320px] lg:order-2 lg:col-span-7 lg:min-h-[520px]">
+                <Reveal direction="right" delay={120}>
+                  <div className="zaram-image-hover h-full">
                 <ImagePlaceholder
-                  label="Executive Room Image"
-                  dark
-                  className="min-h-[320px]"
-                />
+                    label="Executive Room Image"
+                    dark
+                    className="min-h-[320px]"
+                  />
+                  </div>
+                </Reveal>
               </div>
             </div>
           </div>
@@ -372,13 +395,19 @@ export default function RoomsPage() {
           <div className="grid grid-cols-1 bg-[#F7F3EA] shadow-sm lg:grid-cols-12">
 
             <div className="min-h-[320px] lg:col-span-7 lg:min-h-[520px]">
-              <ImagePlaceholder
+              <Reveal direction="left">
+                <div className="zaram-image-hover h-full">
+                  <ImagePlaceholder
                 label="Deluxe Suite Image"
                 className="min-h-[320px]"
-              />
+                  />
+                </div>
+              </Reveal>
             </div>
 
             <div className="flex flex-col justify-between p-7 sm:p-10 lg:col-span-5">
+              <Reveal direction="right" delay={120}>
+                <div className="flex h-full flex-col justify-between">
 
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
@@ -421,6 +450,9 @@ export default function RoomsPage() {
                 </a>
               </div>
             </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
@@ -433,6 +465,7 @@ export default function RoomsPage() {
 
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
+          <Reveal direction="up">
           <div className="mb-12 max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
               Quick Overview
@@ -442,7 +475,9 @@ export default function RoomsPage() {
               Choose the Room That Suits You
             </h2>
           </div>
+          </Reveal>
 
+          <Reveal direction="up" delay={120}>
           <div className="w-full overflow-x-auto">
 
             <div className="min-w-[720px]">
@@ -547,6 +582,7 @@ export default function RoomsPage() {
               </div>
             </div>
           </div>
+          </Reveal>
         </div>
       </section>
 
@@ -558,6 +594,7 @@ export default function RoomsPage() {
 
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
+          <Reveal direction="up">
           <div className="flex flex-col items-start justify-between gap-8 bg-[#F7F3EA] p-8 shadow-sm sm:p-12 md:flex-row md:items-center">
 
             <div className="max-w-xl">
@@ -582,6 +619,7 @@ export default function RoomsPage() {
               Book Your Stay
             </Link>
           </div>
+          </Reveal>
         </div>
       </section>
     </main>
