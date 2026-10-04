@@ -3,13 +3,14 @@ import Link from "next/link";
 import { Suspense } from "react";
 import {
   Clock3,
+  Camera,
   Mail,
   MapPin,
-  MessageCircle,
   Phone,
 } from "lucide-react";
 
 import ContactForm from "@/components/contact/ContactForm";
+import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -17,23 +18,23 @@ export const metadata: Metadata = {
 
 function ImagePlaceholder({
   label,
-  dark = false,
   className = "",
+  dark = false,
 }: {
   label: string;
-  dark?: boolean;
   className?: string;
+  dark?: boolean;
 }) {
   return (
     <div
       className={[
-        "flex h-full w-full items-center justify-center",
+        "flex items-center justify-center",
         dark ? "bg-[#174735]" : "bg-[#DDD5C8]",
         className,
       ].join(" ")}
     >
       <div className="text-center">
-        <div className="mx-auto mb-3 h-px w-12 bg-[#C89D35]" />
+        <div className="mx-auto mb-3 h-px w-10 bg-[#C89D35]" />
 
         <span
           className={[
@@ -48,20 +49,18 @@ function ImagePlaceholder({
   );
 }
 
-const quickContacts = [
+const quickContact = [
   {
     title: "Call Us",
-    description:
-      "Immediate assistance from our front desk and reservation team.",
+    description: "Speak directly with our team for enquiries or reservations.",
     value: "08139654033",
-    href: "tel:2348139654033",
-    action: "Call Now",
+    href: "tel:+2348139654033",
+    action: "Call Zaram",
     icon: Phone,
   },
   {
     title: "Email Us",
-    description:
-      "Send us your room, reservation or general hotel enquiry.",
+    description: "Send us an email and we will respond as soon as possible.",
     value: "zaramhotel10@gmail.com",
     href: "mailto:zaramhotel10@gmail.com",
     action: "Send Email",
@@ -69,12 +68,11 @@ const quickContacts = [
   },
   {
     title: "Instagram",
-    description:
-      "Follow Zaram Hotels and send us a message through Instagram.",
+    description: "Follow Zaram Hotels or send us a message on Instagram.",
     value: "@zaramhotel",
     href: "https://www.instagram.com/zaramhotel",
     action: "Visit Instagram",
-    icon: MessageCircle,
+    icon: Camera,
   },
 ];
 
@@ -82,274 +80,290 @@ export default function ContactPage() {
   return (
     <main className="bg-[#F7F3EA] pt-20">
 
-      {/* =====================================================
-          HERO
-      ====================================================== */}
-
-      <section className="relative flex h-[471px] min-h-[380px] max-h-[500px] items-end overflow-hidden bg-[#0B4A32]">
+      {/* HERO */}
+      <section className="relative flex h-[46vh] min-h-[390px] max-h-[540px] items-end overflow-hidden bg-[#0B4A32]">
 
         <ImagePlaceholder
           label="Contact Hero Image"
           dark
-          className="absolute inset-0"
+          className="absolute inset-0 h-full w-full"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B4A32] via-[#0B4A32]/75 to-[#0B4A32]/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#00321F] via-[#00321F]/75 to-[#00321F]/25" />
 
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-5 pb-12 sm:px-6 md:pb-16 lg:px-10">
 
           <div className="max-w-2xl">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
-              Contact
+            <p className="zaram-hero-reveal zaram-delay-1 text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
+              Contact Zaram
             </p>
 
-            <h1 className="mt-3 font-serif text-5xl font-semibold leading-tight text-[#F7F3EA] md:text-6xl">
-              We’re Here to Help
+            <h1 className="zaram-hero-reveal zaram-delay-2 mt-3 font-serif text-4xl font-semibold leading-tight text-[#F7F3EA] md:text-6xl">
+              We&apos;re Here to Help
             </h1>
 
-            <p className="mt-4 max-w-xl text-lg font-light leading-7 text-[#F7F3EA]/90">
-              Get in touch with Zaram Hotels and Garden for reservations,
-              enquiries or assistance with your stay.
+            <p className="zaram-hero-reveal zaram-delay-3 mt-4 max-w-xl text-[15px] leading-7 text-[#DFE4DA]">
+              Whether you are planning a stay, checking availability or simply
+              have a question, our team is ready to assist.
             </p>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          CONTACT + FORM
-      ====================================================== */}
-
-      <section className="bg-[#F7F3EA] py-20 md:py-24">
-
+      {/* CONTACT + FORM */}
+      <section className="bg-[#F7F3EA] py-24">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
 
-            {/* Left */}
+            {/* DETAILS */}
             <div className="lg:col-span-5">
+              <Reveal direction="left">
 
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                Get In Touch
-              </p>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#B88923]">
+                    Get in Touch
+                  </p>
 
-              <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight text-[#00321F] md:text-5xl">
-                Let’s Make Your Stay Easy
-              </h2>
+                  <h2 className="mt-3 font-serif text-4xl font-semibold leading-[1.08] text-[#00321F] md:text-5xl">
+                    Contact Our Team
+                  </h2>
 
-              <p className="mt-6 text-[15px] leading-7 text-[#404943]">
-                Whether you are planning a future stay, enquiring about our
-                rooms or need assistance with a reservation, our team is
-                ready to help.
-              </p>
+                  <p className="mt-6 max-w-md text-[15px] leading-7 text-[#404943]">
+                    Reach out to Zaram Hotels and Garden for reservations,
+                    enquiries or assistance with your stay.
+                  </p>
 
-              <div className="mt-10">
+                  <div className="mt-10 space-y-7">
 
-                {/* Phone */}
-                <div className="flex items-start gap-4 py-6">
+                    <div className="flex gap-4">
+                      <Phone
+                        size={24}
+                        strokeWidth={1.6}
+                        className="mt-1 shrink-0 text-[#C89D35]"
+                      />
 
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#EBEFE6] text-[#00321F]">
-                    <Phone size={19} />
-                  </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#00321F]">
+                          Phone
+                        </p>
 
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                      Phone
-                    </p>
+                        <a
+                          href="tel:+2348139654033"
+                          className="mt-1 block text-[15px] text-[#404943] transition-colors hover:text-[#B88923]"
+                        >
+                          08139654033
+                        </a>
+                      </div>
+                    </div>
 
-                    <a
-                      href="tel:2348139654033"
-                      className="mt-1 block font-serif text-lg font-semibold text-[#20251F] transition-colors hover:text-[#0B4A32]"
-                    >
-                      08139654033
-                    </a>
+                    <div className="flex gap-4">
+                      <Mail
+                        size={24}
+                        strokeWidth={1.6}
+                        className="mt-1 shrink-0 text-[#C89D35]"
+                      />
 
-                    <p className="mt-1 text-sm text-[#404943]">
-                      Guest and reservation assistance
-                    </p>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#00321F]">
+                          Email
+                        </p>
+
+                        <a
+                          href="mailto:zaramhotel10@gmail.com"
+                          className="mt-1 block text-[15px] text-[#404943] transition-colors hover:text-[#B88923]"
+                        >
+                          zaramhotel10@gmail.com
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <MapPin
+                        size={24}
+                        strokeWidth={1.6}
+                        className="mt-1 shrink-0 text-[#C89D35]"
+                      />
+
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#00321F]">
+                          Address
+                        </p>
+
+                        <p className="mt-1 max-w-sm text-[15px] leading-7 text-[#404943]">
+                          EFAB Global Estate, Road 121, House 8, Abuja
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <Camera
+                        size={24}
+                        strokeWidth={1.6}
+                        className="mt-1 shrink-0 text-[#C89D35]"
+                      />
+
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#00321F]">
+                          Instagram
+                        </p>
+
+                        <a
+                          href="https://www.instagram.com/zaramhotel"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 block text-[15px] text-[#404943] transition-colors hover:text-[#B88923]"
+                        >
+                          @zaramhotel
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <Clock3
+                        size={24}
+                        strokeWidth={1.6}
+                        className="mt-1 shrink-0 text-[#C89D35]"
+                      />
+
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#00321F]">
+                          Guest Support
+                        </p>
+
+                        <p className="mt-1 text-[15px] text-[#404943]">
+                          Contact us for reservation and stay enquiries.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                {/* Email */}
-                <div className="flex items-start gap-4 bg-[#F1F5EB] px-4 py-6">
-
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#EBEFE6] text-[#00321F]">
-                    <Mail size={19} />
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                      Email
-                    </p>
-
-                    <a
-                      href="mailto:zaramhotel10@gmail.com"
-                      className="mt-1 block font-serif text-lg font-semibold text-[#20251F] transition-colors hover:text-[#0B4A32]"
-                    >
-                      zaramhotel10@gmail.com
-                    </a>
-
-                    <p className="mt-1 text-sm text-[#404943]">
-                      General enquiries and information
-                    </p>
-                  </div>
-                </div>
-
-                {/* Address */}
-                <div className="flex items-start gap-4 py-6">
-
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#EBEFE6] text-[#00321F]">
-                    <MapPin size={19} />
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                      Address
-                    </p>
-
-                    <p className="mt-1 font-serif text-lg font-semibold text-[#20251F]">
-                      Zaram Hotels and Garden
-                    </p>
-
-                    <p className="mt-1 text-sm text-[#404943]">
-                      EFAB Global Estate, Road 121, House 8, Abuja
-                    </p>
-                  </div>
-                </div>
-              </div>
+              </Reveal>
             </div>
 
-            {/* Right form */}
+            {/* FORM */}
             <div className="lg:col-span-7">
+              <Reveal direction="right" delay={120}>
 
-              <Suspense
-                fallback={
-                  <div className="min-h-[520px] bg-[#F1F5EB]" />
-                }
-              >
-                <ContactForm />
-              </Suspense>
+                <div className="border border-[#0B4A32]/10 bg-[#EAE1D5] p-7 sm:p-10">
+
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
+                    Send an Enquiry
+                  </p>
+
+                  <h2 className="mt-3 font-serif text-3xl font-semibold text-[#00321F]">
+                    How Can We Help?
+                  </h2>
+
+                  <p className="mt-3 text-sm leading-6 text-[#404943]">
+                    Complete the form below and our team will get back to you.
+                  </p>
+
+                  <div className="mt-8">
+                    <Suspense
+                      fallback={
+                        <div className="h-[420px] animate-pulse bg-[#F7F3EA]" />
+                      }
+                    >
+                      <ContactForm />
+                    </Suspense>
+                  </div>
+                </div>
+              </Reveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          LOCATION
-      ====================================================== */}
-
-      <section className="bg-[#0B4A32] py-24 text-[#F7F3EA]">
-
+      {/* LOCATION */}
+      <section className="overflow-hidden bg-[#0B4A32] py-24 text-[#F7F3EA]">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
 
-            <div className="h-[420px] overflow-hidden lg:col-span-7">
+            <div className="lg:col-span-5">
+              <Reveal direction="left">
 
-              <ImagePlaceholder
-                label="Map / Hotel Location"
-                dark
-                className="h-full"
-              />
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
+                    Our Location
+                  </p>
+
+                  <h2 className="mt-3 font-serif text-4xl font-semibold leading-[1.08] md:text-5xl">
+                    Find Zaram in Abuja
+                  </h2>
+
+                  <p className="mt-6 text-[15px] leading-7 text-[#DFE4DA]">
+                    Visit us at EFAB Global Estate, Road 121, House 8, Abuja.
+                    Contact our team if you need help locating the hotel.
+                  </p>
+
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=EFAB+Global+Estate+Road+121+House+8+Abuja"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="zaram-button mt-8 inline-flex h-12 items-center justify-center bg-[#C89D35] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:bg-[#D4A942]"
+                  >
+                    Get Directions
+                  </a>
+                </div>
+              </Reveal>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-7">
+              <Reveal direction="right" delay={120}>
 
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
-                Find Us
-              </p>
-
-              <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight md:text-5xl">
-                Visit Zaram Hotels and Garden
-              </h2>
-
-              <p className="mt-5 text-lg leading-8 text-[#F7F3EA]/85">
-                EFAB Global Estate, Road 121, House 8, Abuja
-              </p>
-
-              <div className="mt-7 space-y-4 bg-[#004B2F]/50 px-5 py-5">
-
-                <div className="flex items-center gap-3">
-                  <Phone size={18} className="text-[#FFDF9D]" />
-                  <span className="text-sm text-[#F7F3EA]/90">
-                    08139654033
-                  </span>
+                <div className="zaram-image-hover">
+                  <ImagePlaceholder
+                    label="Map / Location"
+                    dark
+                    className="aspect-[16/10] w-full border border-[#F7F3EA]/10"
+                  />
                 </div>
-
-                <div className="flex items-center gap-3">
-                  <Mail size={18} className="text-[#FFDF9D]" />
-                  <span className="text-sm text-[#F7F3EA]/90">
-                    zaramhotel10@gmail.com
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Clock3 size={18} className="text-[#FFDF9D]" />
-                  <span className="text-sm text-[#F7F3EA]/90">
-                    Guest support available daily
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-7 flex flex-wrap items-center gap-6">
-
-                <a
-                  href="https://maps.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center bg-[#C89D35] px-7 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:bg-[#FFDF9D]"
-                >
-                  Get Directions
-                </a>
-
-                <a
-                  href="tel:2348139654033"
-                  className="border-b border-[#F7F3EA]/40 pb-1 text-sm font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:text-[#FFDF9D]"
-                >
-                  Call Hotel →
-                </a>
-              </div>
+              </Reveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          QUICK CONTACT
-      ====================================================== */}
-
-      <section className="bg-[#EBEFE6] py-24">
-
+      {/* QUICK CONTACT */}
+      <section className="bg-[#F7F3EA] py-24">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
-          <div className="max-w-2xl">
+          <Reveal direction="up">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-              Quick Contact
-            </p>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#B88923]">
+                Quick Contact
+              </p>
 
-            <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight text-[#00321F] md:text-5xl">
-              Choose the Easiest Way to Reach Us
-            </h2>
-          </div>
+              <h2 className="mt-3 font-serif text-4xl font-semibold leading-[1.08] text-[#00321F] md:text-5xl">
+                Choose the Easiest Way to Reach Us
+              </h2>
+            </div>
+          </Reveal>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
 
-            {quickContacts.map((item) => {
+            {quickContact.map((item, index) => {
               const Icon = item.icon;
 
               return (
-                <div
+                <Reveal
                   key={item.title}
-                  className="flex flex-col justify-between bg-[#F7F3EA] p-7 shadow-sm"
+                  direction="up"
+                  delay={index * 110}
                 >
-                  <div>
+                  <div className="flex h-full flex-col border border-[#0B4A32]/10 bg-[#EAE1D5] p-8">
 
-                    <div className="flex h-12 w-12 items-center justify-center bg-[#E5EAE0] text-[#00321F]">
-                      <Icon size={25} strokeWidth={1.6} />
-                    </div>
+                    <Icon
+                      size={30}
+                      strokeWidth={1.6}
+                      className="text-[#C89D35]"
+                    />
 
-                    <h3 className="mt-5 font-serif text-2xl font-semibold text-[#00321F]">
+                    <h3 className="mt-6 font-serif text-2xl font-semibold text-[#00321F]">
                       {item.title}
                     </h3>
 
@@ -357,111 +371,124 @@ export default function ContactPage() {
                       {item.description}
                     </p>
 
-                    <p className="mt-5 font-serif text-lg font-semibold text-[#20251F]">
+                    <p className="mt-5 text-sm font-semibold text-[#00321F]">
                       {item.value}
                     </p>
-                  </div>
 
-                  <a
-                    href={item.href}
-                    target={item.title === "WhatsApp" ? "_blank" : undefined}
-                    rel={item.title === "WhatsApp" ? "noopener noreferrer" : undefined}
-                    className="mt-6 inline-flex items-center gap-2 border-b border-[#C89D35] pb-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:text-[#B88923]"
-                  >
-                    {item.action} →
-                  </a>
-                </div>
+                    <a
+                      href={item.href}
+                      target={
+                        item.href.startsWith("http") ? "_blank" : undefined
+                      }
+                      rel={
+                        item.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="zaram-link mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:text-[#B88923]"
+                    >
+                      {item.action} →
+                    </a>
+                  </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          RESERVATION SUPPORT
-      ====================================================== */}
+      {/* RESERVATION SUPPORT */}
+      <section
+        id="reservation"
+        className="scroll-mt-24 bg-[#EAE1D5] py-24"
+      >
+        <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
-      <section className="bg-[#DFE4DA] py-16">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
 
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-5 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+            <div className="lg:col-span-7">
+              <Reveal direction="left">
 
-          <div className="max-w-2xl">
+                <div className="zaram-image-hover">
+                  <ImagePlaceholder
+                    label="Reservation Support Image"
+                    className="aspect-[16/10] w-full"
+                  />
+                </div>
+              </Reveal>
+            </div>
 
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-              Concierge Booking
-            </p>
+            <div className="lg:col-span-5">
+              <Reveal direction="right" delay={120}>
 
-            <h2 className="mt-3 font-serif text-4xl font-semibold text-[#00321F]">
-              Planning Your Stay?
-            </h2>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#B88923]">
+                    Reservations
+                  </p>
 
-            <p className="mt-4 text-[15px] leading-7 text-[#404943]">
-              Reach out directly if you need help selecting a room or
-              arranging your stay.
-            </p>
-          </div>
+                  <h2 className="mt-3 font-serif text-4xl font-semibold leading-[1.08] text-[#00321F] md:text-5xl">
+                    Need Help Booking Your Stay?
+                  </h2>
 
-          <div className="flex flex-wrap gap-4">
+                  <p className="mt-6 text-[15px] leading-7 text-[#404943]">
+                    Contact our team directly for room availability,
+                    reservation assistance or questions about your stay.
+                  </p>
 
-            <a
-              href="#reservation"
-              className="inline-flex h-12 items-center justify-center bg-[#0B4A32] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:bg-[#145038]"
-            >
-              Book Now
-            </a>
+                  <div className="mt-8 flex flex-wrap gap-4">
 
-            <Link
-              href="/rooms"
-              className="inline-flex h-12 items-center justify-center bg-[#F7F3EA] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:bg-white"
-            >
-              View Rooms
-            </Link>
+                    <a
+                      href="tel:+2348139654033"
+                      className="zaram-button inline-flex h-12 items-center justify-center bg-[#0B4A32] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038]"
+                    >
+                      Call to Book
+                    </a>
+
+                    <a
+                      href="mailto:zaramhotel10@gmail.com"
+                      className="zaram-button inline-flex h-12 items-center justify-center border border-[#0B4A32]/30 px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:bg-[#0B4A32] hover:text-white"
+                    >
+                      Email Us
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          FINAL CTA
-      ====================================================== */}
-
-      <section className="bg-[#0B4A32] py-24 text-[#F7F3EA]">
-
+      {/* FINAL CTA */}
+      <section className="bg-[#0B4A32] py-20 text-[#F7F3EA]">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
-          <div className="flex flex-col gap-8 bg-[#004B2F]/60 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+          <Reveal direction="up">
 
-            <div className="max-w-xl">
+            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
-                Need Assistance?
-              </p>
+              <div className="max-w-2xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
+                  Your Stay Starts Here
+                </p>
 
-              <h2 className="mt-3 font-serif text-4xl font-semibold md:text-5xl">
-                Speak With Our Team
-              </h2>
+                <h2 className="mt-3 font-serif text-4xl font-semibold md:text-5xl">
+                  Ready to Stay at Zaram?
+                </h2>
 
-              <p className="mt-4 text-[15px] leading-7 text-[#F7F3EA]/85">
-                We’re available to help with your booking and hotel enquiries.
-              </p>
-            </div>
+                <p className="mt-4 text-[15px] leading-7 text-[#DFE4DA]">
+                  Explore our available rooms and choose the option that works
+                  best for your stay.
+                </p>
+              </div>
 
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-
-              <a
-                href="tel:2348139654033"
-                className="inline-flex h-12 items-center justify-center bg-[#C89D35] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:bg-[#FFDF9D]"
+              <Link
+                href="/rooms"
+                className="zaram-button inline-flex h-12 items-center justify-center bg-[#C89D35] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:bg-[#D4A942]"
               >
-                Contact Us
-              </a>
-
-              <a
-                href="#reservation"
-                className="border-b border-[#F7F3EA]/40 pb-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:text-[#FFDF9D]"
-              >
-                Book Your Stay →
-              </a>
+                View Rooms
+              </Link>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>
