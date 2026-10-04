@@ -94,3 +94,155 @@ img {
   background: #c89d35;
   color: #073d2b;
 }
+
+
+/* ==========================================================
+   ZARAM MOTION SYSTEM
+   ========================================================== */
+
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration, 700ms)
+      cubic-bezier(0.22, 1, 0.36, 1)
+      var(--reveal-delay, 0ms),
+    transform var(--reveal-duration, 700ms)
+      cubic-bezier(0.22, 1, 0.36, 1)
+      var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal="up"] {
+  transform: translateY(var(--reveal-distance, 28px));
+}
+
+[data-reveal="down"] {
+  transform: translateY(calc(var(--reveal-distance, 28px) * -1));
+}
+
+[data-reveal="left"] {
+  transform: translateX(var(--reveal-distance, 28px));
+}
+
+[data-reveal="right"] {
+  transform: translateX(calc(var(--reveal-distance, 28px) * -1));
+}
+
+[data-reveal="fade"] {
+  transform: none;
+}
+
+[data-reveal][data-visible="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* Hero entrance */
+
+@keyframes zaram-hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.zaram-hero-reveal {
+  opacity: 0;
+  animation:
+    zaram-hero-reveal 900ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.zaram-delay-1 {
+  animation-delay: 100ms;
+}
+
+.zaram-delay-2 {
+  animation-delay: 220ms;
+}
+
+.zaram-delay-3 {
+  animation-delay: 340ms;
+}
+
+.zaram-delay-4 {
+  animation-delay: 460ms;
+}
+
+
+/* Image interaction */
+
+.zaram-image-hover {
+  overflow: hidden;
+}
+
+.zaram-image-hover > img,
+.zaram-image-hover > div {
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zaram-image-hover:hover > img,
+.zaram-image-hover:hover > div {
+  transform: scale(1.025);
+}
+
+
+/* Button interaction */
+
+.zaram-button {
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease;
+}
+
+.zaram-button:hover {
+  transform: translateY(-2px);
+}
+
+.zaram-button:active {
+  transform: translateY(0);
+}
+
+
+/* Text links */
+
+.zaram-link {
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.zaram-link:hover {
+  transform: translateX(3px);
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal],
+  [data-reveal][data-visible="true"],
+  .zaram-hero-reveal,
+  .zaram-image-hover > img,
+  .zaram-image-hover > div,
+  .zaram-button,
+  .zaram-link {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

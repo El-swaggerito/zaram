@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Reveal from "@/components/ui/Reveal";
 import {
   Wifi,
   CarFront,
@@ -117,22 +118,22 @@ export default function HomePage() {
 
             <div className="max-w-xl">
 
-              <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">
+              <p className="zaram-hero-reveal zaram-delay-1 text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">
                 Welcome to Zaram
               </p>
 
-              <h1 className="mt-4 font-serif text-5xl font-semibold leading-[0.98] tracking-tight text-[#F7F3EA] sm:text-6xl lg:text-[64px]">
+              <h1 className="zaram-hero-reveal zaram-delay-2 mt-4 font-serif text-5xl font-semibold leading-[0.98] tracking-tight text-[#F7F3EA] sm:text-6xl lg:text-[64px]">
                 Stay Comfortable.
                 <br />
                 Stay Zaram.
               </h1>
 
-              <p className="mt-6 max-w-lg text-base leading-7 text-[#F7F3EA]/85 sm:text-lg">
+              <p className="zaram-hero-reveal zaram-delay-3 mt-6 max-w-lg text-base leading-7 text-[#F7F3EA]/85 sm:text-lg">
                 A welcoming stay built around comfort, thoughtful
                 hospitality and convenience.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="zaram-hero-reveal zaram-delay-4 mt-8 flex flex-wrap gap-4">
 
                 <Link
                   href="/contact"
@@ -147,8 +148,11 @@ export default function HomePage() {
                 >
                   View Rooms
                 </Link>
+                  </div>
+                </Reveal>
               </div>
             </div>
+            </Reveal>
           </div>
         </section>
 
@@ -160,7 +164,8 @@ export default function HomePage() {
 
           <div className="mx-auto -mt-10 max-w-[1160px] px-5 sm:px-6 md:-mt-12 lg:px-10">
 
-            <form className="grid grid-cols-1 border border-[#0B4A32]/15 bg-[#F7F3EA] p-2 shadow-[0_8px_30px_rgba(11,74,50,0.12)] md:grid-cols-4 md:p-3">
+            <Reveal direction="up" delay={100}>
+              <form className="grid grid-cols-1 border border-[#0B4A32]/15 bg-[#F7F3EA] p-2 shadow-[0_8px_30px_rgba(11,74,50,0.12)] md:grid-cols-4 md:p-3">
 
               <label className="border-b border-[#0B4A32]/15 px-6 py-4 md:border-b-0 md:border-r">
 
@@ -213,6 +218,7 @@ export default function HomePage() {
                 </button>
               </div>
             </form>
+            </Reveal>
           </div>
         </section>
 
@@ -228,14 +234,20 @@ export default function HomePage() {
 
               <div className="lg:col-span-7">
 
-                <ImagePlaceholder
+                <Reveal direction="left">
+                  <div className="zaram-image-hover">
+                    <ImagePlaceholder
                   label="Hotel Introduction Image"
                   className="aspect-[16/11] w-full"
-                />
+                    />
+                  </div>
+                </Reveal>
               </div>
 
               <div className="lg:col-span-5 lg:pl-4">
 
+                <Reveal direction="right" delay={120}>
+                  <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">
                   Welcome
                 </p>
@@ -269,7 +281,8 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
-            <div className="flex flex-col gap-6 border-b border-[#0B4A32]/10 pb-12 md:flex-row md:items-end md:justify-between">
+            <Reveal direction="up">
+              <div className="flex flex-col gap-6 border-b border-[#0B4A32]/10 pb-12 md:flex-row md:items-end md:justify-between">
 
               <div>
 
@@ -293,11 +306,17 @@ export default function HomePage() {
                 View All Rooms →
               </Link>
             </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 gap-10 pt-12 md:grid-cols-3 md:gap-8">
 
-              {rooms.map((room) => (
-                <article key={room.name} className="group flex flex-col">
+              {rooms.map((room, index) => (
+                <Reveal
+                  key={room.name}
+                  direction="up"
+                  delay={index * 120}
+                >
+                <article className="group flex flex-col">
 
                   <div className="overflow-hidden">
                     <ImagePlaceholder
@@ -334,6 +353,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </article>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -351,6 +371,8 @@ export default function HomePage() {
 
               <div className="order-2 lg:order-1 lg:col-span-5">
 
+                <Reveal direction="left">
+                  <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">
                   The Zaram Experience
                 </p>
@@ -381,14 +403,20 @@ export default function HomePage() {
                     Contact Us →
                   </Link>
                 </div>
+                  </div>
+                </Reveal>
               </div>
 
               <div className="order-1 lg:order-2 lg:col-span-7">
 
-                <ImagePlaceholder
+                <Reveal direction="right" delay={120}>
+                  <div className="zaram-image-hover">
+                    <ImagePlaceholder
                   label="Zaram Experience Image"
                   className="aspect-[16/11] w-full bg-[#163D2E] text-white"
-                />
+                    />
+                  </div>
+                </Reveal>
               </div>
             </div>
           </div>
@@ -402,6 +430,7 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
+            <Reveal direction="up">
             <div className="mx-auto max-w-2xl text-center">
 
               <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">
@@ -412,6 +441,7 @@ export default function HomePage() {
                 Everything You Need for a Comfortable Stay
               </h2>
             </div>
+            </Reveal>
 
             <div className="mt-16 grid grid-cols-2 gap-y-10 md:grid-cols-3 lg:grid-cols-6">
 
@@ -419,8 +449,12 @@ export default function HomePage() {
                 const Icon = amenity.icon;
 
                 return (
-                  <div
+                  <Reveal
                     key={amenity.name}
+                    direction="up"
+                    delay={index * 80}
+                  >
+                  <div
                     className={[
                       "flex flex-col items-center px-4 text-center",
                       index > 0 ? "lg:border-l lg:border-[#0B4A32]/10" : "",
@@ -442,6 +476,7 @@ export default function HomePage() {
                       {amenity.detail}
                     </p>
                   </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -456,6 +491,7 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
+            <Reveal direction="up">
             <div className="border border-[#0B4A32]/15 bg-[#EAE1D5] p-10 md:p-14">
 
               <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
