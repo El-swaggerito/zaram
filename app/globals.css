@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-jakarta);
+
+  --color-zaram-green-950: #073d2b;
+  --color-zaram-green-900: #0b4a32;
+  --color-zaram-green-800: #125a3e;
+  --color-zaram-green-700: #19704c;
+
+  --color-zaram-gold-600: #b88923;
+  --color-zaram-gold-500: #c89d35;
+  --color-zaram-gold-400: #d6b45d;
+
+  --color-zaram-ivory: #f7f3ea;
+  --color-zaram-cream: #eee5d8;
+  --color-zaram-sand: #e4d8c8;
+
+  --color-zaram-charcoal: #20251f;
+  --color-zaram-muted: #686d66;
+  --color-zaram-border: #d8d0c4;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #f7f3ea;
+  --foreground: #20251f;
+
+  --container-site: 1280px;
+
+  --section-space-sm: 4.5rem;
+  --section-space-md: 6rem;
+  --section-space-lg: 8rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: #c89d35;
+  color: #073d2b;
 }
