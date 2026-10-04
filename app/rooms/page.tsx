@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+
 import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
@@ -49,7 +50,6 @@ function AmenityIcon({
   light?: boolean;
 }) {
   const colour = light ? "text-[#FFDF9D]" : "text-[#C89D35]";
-
   const common = `${colour} h-5 w-5 shrink-0`;
 
   if (type === "wifi") {
@@ -151,19 +151,25 @@ function AmenityGrid({
 }) {
   return (
     <div className="grid grid-cols-2 gap-x-5 gap-y-4 border-t border-current/10 py-6">
-      {items.map(([icon, label]) => (
-        <div key={label} className="flex items-center gap-2.5">
-          <AmenityIcon type={icon} light={light} />
+      {items.map(([icon, label], index) => (
+        <Reveal
+          key={label}
+          direction="up"
+          delay={index * 60}
+        >
+          <div className="flex items-center gap-2.5">
+            <AmenityIcon type={icon} light={light} />
 
-          <span
-            className={[
-              "text-xs",
-              light ? "text-[#F7F3EA]" : "text-[#20251F]",
-            ].join(" ")}
-          >
-            {label}
-          </span>
-        </div>
+            <span
+              className={[
+                "text-xs",
+                light ? "text-[#F7F3EA]" : "text-[#20251F]",
+              ].join(" ")}
+            >
+              {label}
+            </span>
+          </div>
+        </Reveal>
       ))}
     </div>
   );
@@ -173,10 +179,7 @@ export default function RoomsPage() {
   return (
     <main className="bg-[#F7F3EA] pt-20">
 
-      {/* =====================================================
-          HERO
-      ====================================================== */}
-
+      {/* HERO */}
       <section className="relative flex h-[50vh] min-h-[420px] max-h-[580px] items-end overflow-hidden bg-[#0B4A32]">
 
         <ImagePlaceholder
@@ -190,6 +193,7 @@ export default function RoomsPage() {
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-5 pb-12 sm:px-6 md:pb-16 lg:px-10">
 
           <div className="max-w-xl">
+
             <p className="zaram-hero-reveal zaram-delay-1 text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
               Rooms & Suites
             </p>
@@ -206,10 +210,7 @@ export default function RoomsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          INTRO
-      ====================================================== */}
-
+      {/* INTRO */}
       <section className="bg-[#F7F3EA] py-20">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
@@ -217,36 +218,35 @@ export default function RoomsPage() {
 
             <div className="md:col-span-6">
               <Reveal direction="left">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                Accommodations
-              </p>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
+                    Accommodations
+                  </p>
 
-              <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight text-[#00321F] md:text-5xl">
-                Comfort Designed Around You
-              </h2>
+                  <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight text-[#00321F] md:text-5xl">
+                    Comfort Designed Around You
+                  </h2>
+                </div>
               </Reveal>
             </div>
 
             <div className="md:col-span-6 md:pt-6">
               <Reveal direction="right" delay={120}>
-              <p className="text-base leading-8 text-[#404943] md:text-lg">
-                Zaram Hotels and Garden offers thoughtfully designed room
-                options tailored for individual travellers, couples, and
-                guests seeking additional space and refined convenience.
-              </p>
+                <p className="text-base leading-8 text-[#404943] md:text-lg">
+                  Zaram Hotels and Garden offers thoughtfully designed room
+                  options tailored for individual travellers, couples, and
+                  guests seeking additional space and refined convenience.
+                </p>
               </Reveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          ROOM LISTINGS
-      ====================================================== */}
-
+      {/* ROOM LISTINGS */}
       <section className="space-y-24 bg-[#EAE1D5] py-24">
 
-        {/* STANDARD ROOM */}
+        {/* STANDARD */}
         <div
           id="standard-room"
           className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10"
@@ -257,65 +257,64 @@ export default function RoomsPage() {
               <Reveal direction="left">
                 <div className="zaram-image-hover h-full">
                   <ImagePlaceholder
-                label="Standard Room Image"
-                className="min-h-[320px]"
+                    label="Standard Room Image"
+                    className="min-h-[320px]"
                   />
                 </div>
               </Reveal>
             </div>
 
-            <div className="flex flex-col justify-between p-7 sm:p-10 lg:col-span-5">
+            <div className="p-7 sm:p-10 lg:col-span-5">
               <Reveal direction="right" delay={120}>
                 <div className="flex h-full flex-col justify-between">
 
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                  Standard Room
-                </p>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
+                      Standard Room
+                    </p>
 
-                <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#00321F]">
-                  Simple Comfort for a Relaxing Stay
-                </h2>
+                    <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#00321F]">
+                      Simple Comfort for a Relaxing Stay
+                    </h2>
 
-                <p className="mt-3 text-sm font-semibold text-[#00321F]">
-                  From ₦35,000
-                  <span className="font-normal text-[#404943]"> / night</span>
-                </p>
+                    <p className="mt-3 text-sm font-semibold text-[#00321F]">
+                      From ₦35,000
+                      <span className="font-normal text-[#404943]"> / night</span>
+                    </p>
 
-                <p className="mt-6 text-[15px] leading-7 text-[#404943]">
-                  A balanced, restful retreat offering thoughtful essentials,
-                  plush bedding and a peaceful atmosphere designed to help
-                  you recharge.
-                </p>
+                    <p className="mt-6 text-[15px] leading-7 text-[#404943]">
+                      A balanced, restful retreat offering thoughtful essentials,
+                      plush bedding and a peaceful atmosphere designed to help
+                      you recharge.
+                    </p>
 
-                <div className="mt-6">
-                  <AmenityGrid items={standardAmenities} />
-                </div>
-              </div>
+                    <div className="mt-6">
+                      <AmenityGrid items={standardAmenities} />
+                    </div>
+                  </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-6">
-                <Link
-                  href="/contact?room=standard#reservation"
-                  className="inline-flex h-12 items-center justify-center bg-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:bg-[#145038]"
-                >
-                  Book This Room
-                </Link>
+                  <div className="mt-6 flex flex-wrap items-center gap-6">
+                    <Link
+                      href="/contact?room=standard#reservation"
+                      className="zaram-button inline-flex h-12 items-center justify-center bg-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038]"
+                    >
+                      Book This Room
+                    </Link>
 
-                <a
-                  href="#standard-room"
-                  className="text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:text-[#B88923]"
-                >
-                  View Details →
-                </a>
-              </div>
-            </div>
+                    <a
+                      href="#standard-room"
+                      className="zaram-link text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:text-[#B88923]"
+                    >
+                      View Details →
+                    </a>
+                  </div>
                 </div>
               </Reveal>
             </div>
           </div>
         </div>
 
-        {/* EXECUTIVE ROOM */}
+        {/* EXECUTIVE */}
         <div
           id="executive-room"
           className="w-full bg-[#0B4A32] py-16"
@@ -324,62 +323,61 @@ export default function RoomsPage() {
 
             <div className="grid grid-cols-1 bg-[#0B4A32] shadow-md lg:grid-cols-12">
 
-              <div className="order-2 flex flex-col justify-between p-7 sm:p-10 lg:order-1 lg:col-span-5">
-              <Reveal direction="left">
-                <div className="flex h-full flex-col justify-between">
+              <div className="order-2 p-7 sm:p-10 lg:order-1 lg:col-span-5">
+                <Reveal direction="left">
+                  <div className="flex h-full flex-col justify-between">
 
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
-                    Executive Room
-                  </p>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
+                        Executive Room
+                      </p>
 
-                  <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#F7F3EA]">
-                    More Space. More Comfort.
-                  </h2>
+                      <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#F7F3EA]">
+                        More Space. More Comfort.
+                      </h2>
 
-                  <p className="mt-3 text-sm font-semibold text-[#FFDF9D]">
-                    From ₦55,000
-                    <span className="font-normal text-[#DFE4DA]"> / night</span>
-                  </p>
+                      <p className="mt-3 text-sm font-semibold text-[#FFDF9D]">
+                        From ₦55,000
+                        <span className="font-normal text-[#DFE4DA]"> / night</span>
+                      </p>
 
-                  <p className="mt-6 text-[15px] leading-7 text-[#DFE4DA]">
-                    Designed for elevated convenience with additional space
-                    for productivity, relaxation and an uninterrupted stay.
-                  </p>
+                      <p className="mt-6 text-[15px] leading-7 text-[#DFE4DA]">
+                        Designed for elevated convenience with additional space
+                        for productivity, relaxation and an uninterrupted stay.
+                      </p>
 
-                  <div className="mt-6">
-                    <AmenityGrid items={executiveAmenities} light />
+                      <div className="mt-6">
+                        <AmenityGrid items={executiveAmenities} light />
+                      </div>
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap items-center gap-6">
+                      <Link
+                        href="/contact?room=executive#reservation"
+                        className="zaram-button inline-flex h-12 items-center justify-center bg-[#FECE61] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:bg-[#FFDF9D]"
+                      >
+                        Book This Room
+                      </Link>
+
+                      <a
+                        href="#executive-room"
+                        className="zaram-link text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] hover:text-[#FFDF9D]"
+                      >
+                        View Details →
+                      </a>
+                    </div>
                   </div>
-                </div>
-
-                <div className="mt-6 flex flex-wrap items-center gap-6">
-                  <Link
-                    href="/contact?room=executive#reservation"
-                    className="inline-flex h-12 items-center justify-center bg-[#FECE61] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:bg-[#FFDF9D]"
-                  >
-                    Book This Room
-                  </Link>
-
-                  <a
-                    href="#executive-room"
-                    className="text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:text-[#FFDF9D]"
-                  >
-                    View Details →
-                  </a>
-                </div>
+                </Reveal>
               </div>
-                </div>
-              </Reveal>
-            </div>
 
               <div className="order-1 min-h-[320px] lg:order-2 lg:col-span-7 lg:min-h-[520px]">
                 <Reveal direction="right" delay={120}>
                   <div className="zaram-image-hover h-full">
-                <ImagePlaceholder
-                    label="Executive Room Image"
-                    dark
-                    className="min-h-[320px]"
-                  />
+                    <ImagePlaceholder
+                      label="Executive Room Image"
+                      dark
+                      className="min-h-[320px]"
+                    />
                   </div>
                 </Reveal>
               </div>
@@ -398,58 +396,57 @@ export default function RoomsPage() {
               <Reveal direction="left">
                 <div className="zaram-image-hover h-full">
                   <ImagePlaceholder
-                label="Deluxe Suite Image"
-                className="min-h-[320px]"
+                    label="Deluxe Suite Image"
+                    className="min-h-[320px]"
                   />
                 </div>
               </Reveal>
             </div>
 
-            <div className="flex flex-col justify-between p-7 sm:p-10 lg:col-span-5">
+            <div className="p-7 sm:p-10 lg:col-span-5">
               <Reveal direction="right" delay={120}>
                 <div className="flex h-full flex-col justify-between">
 
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                  Deluxe Suite
-                </p>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
+                      Deluxe Suite
+                    </p>
 
-                <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#00321F]">
-                  A More Spacious Stay
-                </h2>
+                    <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-[#00321F]">
+                      A More Spacious Stay
+                    </h2>
 
-                <p className="mt-3 text-sm font-semibold text-[#00321F]">
-                  From ₦85,000
-                  <span className="font-normal text-[#404943]"> / night</span>
-                </p>
+                    <p className="mt-3 text-sm font-semibold text-[#00321F]">
+                      From ₦85,000
+                      <span className="font-normal text-[#404943]"> / night</span>
+                    </p>
 
-                <p className="mt-6 text-[15px] leading-7 text-[#404943]">
-                  Our most spacious accommodation with a separate living area
-                  and additional comfort for guests who want more room to
-                  unwind.
-                </p>
+                    <p className="mt-6 text-[15px] leading-7 text-[#404943]">
+                      Our most spacious accommodation with a separate living
+                      area and additional comfort for guests who want more room
+                      to unwind.
+                    </p>
 
-                <div className="mt-6">
-                  <AmenityGrid items={deluxeAmenities} />
-                </div>
-              </div>
+                    <div className="mt-6">
+                      <AmenityGrid items={deluxeAmenities} />
+                    </div>
+                  </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-6">
-                <Link
-                  href="/contact?room=deluxe#reservation"
-                  className="inline-flex h-12 items-center justify-center bg-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:bg-[#145038]"
-                >
-                  Book This Room
-                </Link>
+                  <div className="mt-6 flex flex-wrap items-center gap-6">
+                    <Link
+                      href="/contact?room=deluxe#reservation"
+                      className="zaram-button inline-flex h-12 items-center justify-center bg-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038]"
+                    >
+                      Book This Room
+                    </Link>
 
-                <a
-                  href="#deluxe-suite"
-                  className="text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:text-[#B88923]"
-                >
-                  View Details →
-                </a>
-              </div>
-            </div>
+                    <a
+                      href="#deluxe-suite"
+                      className="zaram-link text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:text-[#B88923]"
+                    >
+                      View Details →
+                    </a>
+                  </div>
                 </div>
               </Reveal>
             </div>
@@ -457,168 +454,160 @@ export default function RoomsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          COMPARISON
-      ====================================================== */}
-
+      {/* COMPARISON */}
       <section className="bg-[#F7F3EA] py-24">
-
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
           <Reveal direction="up">
-          <div className="mb-12 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-              Quick Overview
-            </p>
+            <div className="mb-12 max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
+                Quick Overview
+              </p>
 
-            <h2 className="mt-3 font-serif text-4xl font-semibold text-[#00321F] md:text-5xl">
-              Choose the Room That Suits You
-            </h2>
-          </div>
+              <h2 className="mt-3 font-serif text-4xl font-semibold text-[#00321F] md:text-5xl">
+                Choose the Room That Suits You
+              </h2>
+            </div>
           </Reveal>
 
           <Reveal direction="up" delay={120}>
-          <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-auto">
 
-            <div className="min-w-[720px]">
+              <div className="min-w-[720px]">
 
-              <div className="grid grid-cols-4 pb-5 text-left">
+                <div className="grid grid-cols-4 pb-5 text-left">
 
-                <div className="text-xs font-semibold uppercase tracking-wider text-[#404943]">
-                  Features
-                </div>
-
-                <div className="px-4">
-                  <span className="block font-serif text-lg font-semibold text-[#00321F]">
-                    Standard Room
-                  </span>
-
-                  <span className="text-xs font-medium text-[#B88923]">
-                    ₦35,000 / night
-                  </span>
-                </div>
-
-                <div className="bg-[#EAE1D5]/50 px-4 py-2">
-                  <span className="block font-serif text-lg font-semibold text-[#00321F]">
-                    Executive Room
-                  </span>
-
-                  <span className="text-xs font-medium text-[#B88923]">
-                    ₦55,000 / night
-                  </span>
-                </div>
-
-                <div className="px-4">
-                  <span className="block font-serif text-lg font-semibold text-[#00321F]">
-                    Deluxe Suite
-                  </span>
-
-                  <span className="text-xs font-medium text-[#B88923]">
-                    ₦85,000 / night
-                  </span>
-                </div>
-              </div>
-
-              {[
-                ["Bed Type", "Queen or Double", "King or Queen", "King Bed"],
-                ["Maximum Guests", "2 Adults", "2 Adults, 1 Child", "3 Adults or Family"],
-                ["Room Size", "28 m²", "42 m²", "65 m²"],
-                ["Wi-Fi Access", "Complimentary High-Speed", "Complimentary High-Speed", "Dedicated High-Speed"],
-                ["Air Conditioning", "Included", "Individual Climate Control", "Multi-Zone Climate Control"],
-                ["Room Service", "Standard Hours", "Extended Hours", "24/7 Priority"],
-              ].map((row) => (
-                <div
-                  key={row[0]}
-                  className="grid grid-cols-4 items-center border-t border-[#E2DACD] py-4 text-sm"
-                >
-                  <div className="font-semibold text-[#404943]">
-                    {row[0]}
+                  <div className="text-xs font-semibold uppercase tracking-wider text-[#404943]">
+                    Features
                   </div>
 
-                  <div className="px-4 text-[#20251F]">
-                    {row[1]}
+                  <div className="px-4">
+                    <span className="block font-serif text-lg font-semibold text-[#00321F]">
+                      Standard Room
+                    </span>
+                    <span className="text-xs font-medium text-[#B88923]">
+                      ₦35,000 / night
+                    </span>
                   </div>
 
-                  <div className="self-stretch bg-[#EAE1D5]/50 px-4 py-4 text-[#20251F]">
-                    {row[2]}
+                  <div className="bg-[#EAE1D5]/50 px-4 py-2">
+                    <span className="block font-serif text-lg font-semibold text-[#00321F]">
+                      Executive Room
+                    </span>
+                    <span className="text-xs font-medium text-[#B88923]">
+                      ₦55,000 / night
+                    </span>
                   </div>
 
-                  <div className="px-4 text-[#20251F]">
-                    {row[3]}
+                  <div className="px-4">
+                    <span className="block font-serif text-lg font-semibold text-[#00321F]">
+                      Deluxe Suite
+                    </span>
+                    <span className="text-xs font-medium text-[#B88923]">
+                      ₦85,000 / night
+                    </span>
                   </div>
                 </div>
-              ))}
 
-              <div className="grid grid-cols-4 border-t border-[#E2DACD] py-5">
-
-                <div />
-
-                <div className="px-4">
-                  <Link
-                    href="/contact?room=standard#reservation"
-                    className="text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
+                {[
+                  ["Bed Type", "Queen or Double", "King or Queen", "King Bed"],
+                  ["Maximum Guests", "2 Adults", "2 Adults, 1 Child", "3 Adults or Family"],
+                  ["Room Size", "28 m²", "42 m²", "65 m²"],
+                  ["Wi-Fi Access", "Complimentary High-Speed", "Complimentary High-Speed", "Dedicated High-Speed"],
+                  ["Air Conditioning", "Included", "Individual Climate Control", "Multi-Zone Climate Control"],
+                  ["Room Service", "Standard Hours", "Extended Hours", "24/7 Priority"],
+                ].map((row, index) => (
+                  <Reveal
+                    key={row[0]}
+                    direction="up"
+                    delay={index * 60}
                   >
-                    Book Room →
-                  </Link>
-                </div>
+                    <div className="grid grid-cols-4 items-center border-t border-[#E2DACD] py-4 text-sm">
+                      <div className="font-semibold text-[#404943]">
+                        {row[0]}
+                      </div>
 
-                <div className="bg-[#EAE1D5]/50 px-4">
-                  <Link
-                    href="/contact?room=executive#reservation"
-                    className="text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
-                  >
-                    Book Room →
-                  </Link>
-                </div>
+                      <div className="px-4 text-[#20251F]">
+                        {row[1]}
+                      </div>
 
-                <div className="px-4">
-                  <Link
-                    href="/contact?room=deluxe#reservation"
-                    className="text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
-                  >
-                    Book Room →
-                  </Link>
+                      <div className="self-stretch bg-[#EAE1D5]/50 px-4 py-4 text-[#20251F]">
+                        {row[2]}
+                      </div>
+
+                      <div className="px-4 text-[#20251F]">
+                        {row[3]}
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+
+                <div className="grid grid-cols-4 border-t border-[#E2DACD] py-5">
+
+                  <div />
+
+                  <div className="px-4">
+                    <Link
+                      href="/contact?room=standard#reservation"
+                      className="zaram-link text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
+                    >
+                      Book Room →
+                    </Link>
+                  </div>
+
+                  <div className="bg-[#EAE1D5]/50 px-4">
+                    <Link
+                      href="/contact?room=executive#reservation"
+                      className="zaram-link text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
+                    >
+                      Book Room →
+                    </Link>
+                  </div>
+
+                  <div className="px-4">
+                    <Link
+                      href="/contact?room=deluxe#reservation"
+                      className="zaram-link text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
+                    >
+                      Book Room →
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </Reveal>
         </div>
       </section>
 
-      {/* =====================================================
-          CTA
-      ====================================================== */}
-
+      {/* CTA */}
       <section className="bg-[#EAE1D5] py-20">
-
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
           <Reveal direction="up">
-          <div className="flex flex-col items-start justify-between gap-8 bg-[#F7F3EA] p-8 shadow-sm sm:p-12 md:flex-row md:items-center">
+            <div className="flex flex-col items-start justify-between gap-8 bg-[#F7F3EA] p-8 shadow-sm sm:p-12 md:flex-row md:items-center">
 
-            <div className="max-w-xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
-                Reservations
-              </p>
+              <div className="max-w-xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B88923]">
+                  Reservations
+                </p>
 
-              <h2 className="mt-3 font-serif text-3xl font-semibold text-[#00321F]">
-                Found the Right Room?
-              </h2>
+                <h2 className="mt-3 font-serif text-3xl font-semibold text-[#00321F]">
+                  Found the Right Room?
+                </h2>
 
-              <p className="mt-4 text-[15px] leading-7 text-[#404943]">
-                Reserve your stay today and experience warm hospitality in
-                a peaceful environment.
-              </p>
+                <p className="mt-4 text-[15px] leading-7 text-[#404943]">
+                  Reserve your stay today and experience warm hospitality in
+                  a peaceful environment.
+                </p>
+              </div>
+
+              <Link
+                href="/contact#reservation"
+                className="zaram-button inline-flex h-12 w-full items-center justify-center bg-[#0B4A32] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038] sm:w-auto"
+              >
+                Book Your Stay
+              </Link>
             </div>
-
-            <Link
-              href="/contact#reservation"
-              className="inline-flex h-12 w-full items-center justify-center bg-[#0B4A32] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:bg-[#145038] sm:w-auto"
-            >
-              Book Your Stay
-            </Link>
-          </div>
           </Reveal>
         </div>
       </section>
