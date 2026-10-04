@@ -21,14 +21,13 @@ export const siteConfig = {
   ],
 
   contact: {
-    phone: "+234 XXX XXX XXXX",
-    email: "hello@zaramhotels.com",
-    address: "City, State, Nigeria",
+    phone: "08139654033",
+    email: "zaramhotel10@gmail.com",
+    address: "EFAB Global Estate, Road 121, House 8, Abuja",
   },
 
   social: {
-    instagram: "#",
-    facebook: "#",
-    whatsapp: "#",
+    instagram: "https://www.instagram.com/zaramhotel",
+    tiktok: "https://www.tiktok.com/@zaramhotel",
   },
 } as const;

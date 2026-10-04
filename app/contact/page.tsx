@@ -53,8 +53,8 @@ const quickContacts = [
     title: "Call Us",
     description:
       "Immediate assistance from our front desk and reservation team.",
-    value: "+234 XXX XXX XXXX",
-    href: "tel:+2340000000000",
+    value: "08139654033",
+    href: "tel:2348139654033",
     action: "Call Now",
     icon: Phone,
   },
@@ -62,18 +62,18 @@ const quickContacts = [
     title: "Email Us",
     description:
       "Send us your room, reservation or general hotel enquiry.",
-    value: "hello@zaramhotels.com",
-    href: "mailto:hello@zaramhotels.com",
+    value: "zaramhotel10@gmail.com",
+    href: "mailto:zaramhotel10@gmail.com",
     action: "Send Email",
     icon: Mail,
   },
   {
-    title: "WhatsApp",
+    title: "Instagram",
     description:
-      "Message our guest relations team for quick assistance.",
-    value: "+234 XXX XXX XXXX",
-    href: "https://wa.me/2340000000000",
-    action: "Chat on WhatsApp",
+      "Follow Zaram Hotels and send us a message through Instagram.",
+    value: "@zaramhotel",
+    href: "https://www.instagram.com/zaramhotel",
+    action: "Visit Instagram",
     icon: MessageCircle,
   },
 ];
@@ -158,10 +158,10 @@ export default function ContactPage() {
                     </p>
 
                     <a
-                      href="tel:+2340000000000"
+                      href="tel:2348139654033"
                       className="mt-1 block font-serif text-lg font-semibold text-[#20251F] transition-colors hover:text-[#0B4A32]"
                     >
-                      +234 XXX XXX XXXX
+                      08139654033
                     </a>
 
                     <p className="mt-1 text-sm text-[#404943]">
@@ -183,10 +183,10 @@ export default function ContactPage() {
                     </p>
 
                     <a
-                      href="mailto:hello@zaramhotels.com"
+                      href="mailto:zaramhotel10@gmail.com"
                       className="mt-1 block font-serif text-lg font-semibold text-[#20251F] transition-colors hover:text-[#0B4A32]"
                     >
-                      hello@zaramhotels.com
+                      zaramhotel10@gmail.com
                     </a>
 
                     <p className="mt-1 text-sm text-[#404943]">
@@ -212,7 +212,7 @@ export default function ContactPage() {
                     </p>
 
                     <p className="mt-1 text-sm text-[#404943]">
-                      City, State, Nigeria
+                      EFAB Global Estate, Road 121, House 8, Abuja
                     </p>
                   </div>
                 </div>
@@ -264,7 +264,7 @@ export default function ContactPage() {
               </h2>
 
               <p className="mt-5 text-lg leading-8 text-[#F7F3EA]/85">
-                City, State, Nigeria
+                EFAB Global Estate, Road 121, House 8, Abuja
               </p>
 
               <div className="mt-7 space-y-4 bg-[#004B2F]/50 px-5 py-5">
@@ -272,14 +272,14 @@ export default function ContactPage() {
                 <div className="flex items-center gap-3">
                   <Phone size={18} className="text-[#FFDF9D]" />
                   <span className="text-sm text-[#F7F3EA]/90">
-                    +234 XXX XXX XXXX
+                    08139654033
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <Mail size={18} className="text-[#FFDF9D]" />
                   <span className="text-sm text-[#F7F3EA]/90">
-                    hello@zaramhotels.com
+                    zaramhotel10@gmail.com
                   </span>
                 </div>
 
@@ -303,7 +303,7 @@ export default function ContactPage() {
                 </a>
 
                 <a
-                  href="tel:+2340000000000"
+                  href="tel:2348139654033"
                   className="border-b border-[#F7F3EA]/40 pb-1 text-sm font-semibold uppercase tracking-[0.08em] text-[#F7F3EA] transition-colors hover:text-[#FFDF9D]"
                 >
                   Call Hotel →
@@ -448,7 +448,7 @@ export default function ContactPage() {
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
 
               <a
-                href="tel:+2340000000000"
+                href="tel:2348139654033"
                 className="inline-flex h-12 items-center justify-center bg-[#C89D35] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] transition-colors hover:bg-[#FFDF9D]"
               >
                 Contact Us

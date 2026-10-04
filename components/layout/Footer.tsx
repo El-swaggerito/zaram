@@ -92,10 +92,10 @@ export default function Footer() {
                 </span>
 
                 <a
-                  href="tel:+2340000000000"
+                  href="tel:+2348139654033"
                   className="transition-colors hover:text-white"
                 >
-                  +234 XXX XXX XXXX
+                  08139654033
                 </a>
               </li>
 
@@ -105,10 +105,10 @@ export default function Footer() {
                 </span>
 
                 <a
-                  href="mailto:hello@zaramhotels.com"
+                  href="mailto:zaramhotel10@gmail.com"
                   className="transition-colors hover:text-white"
                 >
-                  hello@zaramhotels.com
+                  zaramhotel10@gmail.com
                 </a>
               </li>
 
@@ -117,7 +117,7 @@ export default function Footer() {
                   Address
                 </span>
 
-                City, State, Nigeria
+                EFAB Global Estate, Road 121, House 8, Abuja
               </li>
             </ul>
           </div>
@@ -133,7 +133,9 @@ export default function Footer() {
 
               <li>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/zaramhotel"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="transition-colors hover:text-[#F7F3EA]"
                 >
                   Instagram
@@ -142,19 +144,12 @@ export default function Footer() {
 
               <li>
                 <a
-                  href="#"
+                  href="https://www.tiktok.com/@zaramhotel"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="transition-colors hover:text-[#F7F3EA]"
                 >
-                  Facebook
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="transition-colors hover:text-[#F7F3EA]"
-                >
-                  WhatsApp
+                  TikTok
                 </a>
               </li>
             </ul>
