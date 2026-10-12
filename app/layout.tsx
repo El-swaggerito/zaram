@@ -1,22 +1,12 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+
+import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/plus-jakarta-sans";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 import "./globals.css";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -34,11 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${jakarta.variable}`}>
+      <body>
         <Header />
-
         {children}
-
         <Footer />
       </body>
     </html>

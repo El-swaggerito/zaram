@@ -147,7 +147,7 @@ export async function GET(request: Request) {
         )
         .all<RoomRow>();
 
-  const rooms = result.results.map((room) => ({
+  const rooms = result.results.map((room: RoomRow) => ({
     id: room.id,
     name: room.name,
     category: room.category,
@@ -163,9 +163,9 @@ export async function GET(request: Request) {
   }));
 
   const categorySummary = {
-    vip: rooms.filter((room) => room.category === "vip").length,
-    big: rooms.filter((room) => room.category === "big").length,
-    medium: rooms.filter((room) => room.category === "medium").length,
+    vip: rooms.filter((room: { category: RoomRow["category"] }) => room.category === "vip").length,
+    big: rooms.filter((room: { category: RoomRow["category"] }) => room.category === "big").length,
+    medium: rooms.filter((room: { category: RoomRow["category"] }) => room.category === "medium").length,
   };
 
   return Response.json(

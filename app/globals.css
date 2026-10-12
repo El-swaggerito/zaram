@@ -1,3 +1,26 @@
+:root {
+  --font-playfair: "Playfair Display Variable", Georgia, serif;
+  --font-jakarta: "Plus Jakarta Sans Variable", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-jakarta);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-serif {
+  font-family: var(--font-playfair);
+}
+
+.font-sans {
+  font-family: var(--font-jakarta);
+}
+
 @import "tailwindcss";
 
 @theme inline {
