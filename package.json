@@ -11,13 +11,11 @@
     "build:vinext": "vite build",
     "start:vinext": "wrangler dev --config dist/server/wrangler.json",
     "deploy:vinext": "vinext-cloudflare deploy --config dist/server/wrangler.json",
-    "deploy:response-store": "wrangler deploy --config wrangler.response-store.jsonc",
     "dev:next": "next dev",
     "build:next": "next build",
     "start:next": "next start"
   },
   "dependencies": {
-    "@cloudflare/workers-response-store": "^1.1.0",
     "@fontsource-variable/playfair-display": "^5.3.0",
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@vinext/cloudflare": "^1.1.0",

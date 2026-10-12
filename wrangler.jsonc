@@ -2,6 +2,15 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "zaram-hotels",
   "compatibility_date": "2026-10-12",
+
+  "main": "vinext/server/fetch-handler",
+
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "none",
+    "binding": "ASSETS"
+  },
+
   "d1_databases": [
     {
       "binding": "zaram_hotels_db",
@@ -9,16 +18,4 @@
       "database_id": "14d7f68d-396e-43db-8476-32046482d30e"
     }
   ]
-,
-  "main": "vinext/server/fetch-handler"
-,
-  "assets": { "directory": "dist/client", "not_found_handling": "none", "binding": "ASSETS" }
-,
-  "images": { "binding": "IMAGES" }
-,
-  "version_metadata": {"binding":"CF_VERSION_METADATA"}
-,
-  "cache": {"enabled":false}
-,
-  "services": [{"binding":"RESPONSE_STORE","service":"zaram-hotels-response-store","entrypoint":"ResponseStoreService"}]
 }
