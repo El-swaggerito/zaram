@@ -368,39 +368,34 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#0B4A32] py-20 text-[#F7F3EA]">
+      {/* FINAL CTA */}
+      <section className="bg-[#F7F3EA] pb-24 pt-20">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
           <Reveal direction="up">
-            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="border border-[#0B4A32]/15 bg-[#EAE1D5] p-10 md:p-14">
 
-              <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#FFDF9D]">
-                  Plan Your Stay
-                </p>
+              <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 
-                <h2 className="mt-3 font-serif text-4xl font-semibold md:text-5xl">
-                  Experience Zaram for Yourself
-                </h2>
+                <div className="max-w-2xl">
 
-                <p className="mt-4 text-[15px] leading-7 text-[#DFE4DA]">
-                  Explore our rooms or get in touch with our team to plan your
-                  stay.
-                </p>
-              </div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">
+                    Reservations
+                  </p>
 
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/rooms"
-                  className="zaram-button inline-flex h-12 items-center justify-center bg-[#C89D35] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#00321F] hover:bg-[#D4A942]"
-                >
-                  View Rooms
-                </Link>
+                  <h2 className="mt-2 font-serif text-4xl font-semibold text-[#0B4A32] md:text-5xl">
+                    Ready for Your Stay?
+                  </h2>
+
+                  <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#404943]">
+                    Reserve your room today and experience warm hospitality
+                    in a peaceful environment.
+                  </p>
+                </div>
 
                 <Link
                   href="/contact#reservation"
-                  className="zaram-button inline-flex h-12 items-center justify-center border border-[#F7F3EA]/40 px-8 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#F7F3EA] hover:text-[#00321F]"
+                  className="zaram-button inline-flex h-12 shrink-0 items-center justify-center bg-[#0B4A32] px-10 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038]"
                 >
                   Book Now
                 </Link>

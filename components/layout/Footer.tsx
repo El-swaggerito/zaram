@@ -11,9 +11,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
 
-            <p className="font-serif text-lg font-semibold text-[#F7F3EA]">
-              Zaram Hotels
-            </p>
+            <Link href="/" className="inline-block">
+              <span className="font-serif text-2xl font-semibold tracking-[-0.02em] text-[#F7F3EA]">
+                Zaram Hotels
+              </span>
+              <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FFDF9D]">
+                Hotels & Garden
+              </span>
+            </Link>
 
             <p className="max-w-xs text-[13px] leading-6 text-[#DFE4DA]">
               An architectural sanctuary of organic garden serene hospitality

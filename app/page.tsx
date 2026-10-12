@@ -12,25 +12,25 @@ import Reveal from "@/components/ui/Reveal";
 
 const rooms = [
   {
-    name: "Standard Room",
-    price: "₦35,000",
+    name: "VIP Rooms",
+    price: "₦75,250",
     description:
-      "A comfortable room with everything you need for a relaxed stay.",
-    placeholder: "Standard Room Image",
+      "Our premium room category, offering generous space and elevated comfort. Available as Nigeria and Morocco.",
+    placeholder: "VIP Room Image",
   },
   {
-    name: "Executive Room",
-    price: "₦55,000",
+    name: "Big Rooms",
+    price: "₦59,125",
     description:
-      "A spacious retreat with added room for work, rest and relaxation.",
-    placeholder: "Executive Room Image",
+      "Spacious rooms designed for a comfortable and relaxing stay. Available as Ghana, Kenya and Rwanda.",
+    placeholder: "Big Room Image",
   },
   {
-    name: "Deluxe Suite",
-    price: "₦85,000",
+    name: "Medium Rooms",
+    price: "₦53,750",
     description:
-      "A more spacious stay with additional comfort and living space.",
-    placeholder: "Deluxe Suite Image",
+      "Comfortable, well-appointed rooms with everything needed for an enjoyable stay. Available as Egypt, Mozambique and Botswana.",
+    placeholder: "Medium Room Image",
   },
 ];
 
@@ -306,7 +306,7 @@ export default function HomePage() {
                       From {room.price}
 
                       <span className="ml-1 font-sans text-sm font-normal text-[#404943]">
-                        / night
+                        / night incl. VAT
                       </span>
                     </p>
 

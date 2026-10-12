@@ -11,8 +11,6 @@ const navigation = [
   { label: "Contact", href: "/contact" },
 ];
 
-const logoUrl =
-  "https://lh3.googleusercontent.com/aida/AEtjO1UHCQVtGaQzcvAAbqZ2cOUmUeXy-X7nd_Qe8uJ2sdUboGTqu6XxcOUhQ33rG8ZXojQLhXrf9nMwYaMVV4HfkFXqazU7uI10it1-h12O7prwcuPm7XIo_cgrYudRDt20Wu5ssXlH1280xrR6jML5EgEAzeCqugRQKduSFswOCUUSq5c1e1N4e1Cuv6G3DSqR5XEtgPDimPg0U4s6yRNrsyF4auBJKKIowF-9ulU79p6MtpJQ3IgCfsh8jrwVJy9TJJm3XXtBQChU";
 
 export default function Header() {
   const pathname = usePathname();
@@ -38,7 +36,7 @@ export default function Header() {
           className="flex items-center"
         >
           <img
-            src={logoUrl}
+            src="/zaram.png"
             alt="Zaram Hotels & Garden Logo"
             className="h-12 w-auto object-contain"
           />
