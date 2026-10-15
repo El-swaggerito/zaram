@@ -200,7 +200,7 @@ export default function RoomsPage() {
                           </Link>
 
                           <Link
-                            href={`/contact?room=${room.slug}#reservation`}
+                            href={`/book/${room.slug}`}
                             className="zaram-button inline-flex h-11 items-center justify-center bg-[#0B4A32] px-5 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038]"
                           >
                             Book This Room

@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 type RoomRow = {
   id: number;
   name: string;
+  slug: string;
   category: "vip" | "big" | "medium";
   base_rate_kobo: number;
   vat_kobo: number;
@@ -17,12 +18,17 @@ function isValidDate(value: string) {
   return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
+function isValidSlug(value: string) {
+  return /^[a-z0-9-]+$/.test(value);
+}
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
 
   const checkIn = url.searchParams.get("checkIn");
   const checkOut = url.searchParams.get("checkOut");
   const category = url.searchParams.get("category");
+  const slug = url.searchParams.get("slug");
 
   if (!checkIn || !checkOut) {
     return Response.json(
@@ -64,25 +70,49 @@ export async function GET(request: Request) {
     );
   }
 
+  if (slug && !isValidSlug(slug)) {
+    return Response.json(
+      {
+        success: false,
+        error: "Invalid room slug.",
+      },
+      { status: 400 }
+    );
+  }
+
   /*
-    A room is unavailable if:
+    Date overlap rule:
 
       existing check-in < requested check-out
       AND
       existing check-out > requested check-in
 
-    This allows one guest to check out on the same day
-    another guest checks in.
+    This allows same-day turnover.
+
+    A booking blocks availability when:
+      - confirmed
+      - checked_in
+      - pending AND its temporary hold has not expired
   */
 
-  const categoryClause = category
-    ? "AND r.category = ?"
-    : "";
+  const filters: string[] = [];
+  const filterValues: string[] = [];
+
+  if (category) {
+    filters.push("AND r.category = ?");
+    filterValues.push(category);
+  }
+
+  if (slug) {
+    filters.push("AND r.slug = ?");
+    filterValues.push(slug);
+  }
 
   const sql = `
     SELECT
       r.id,
       r.name,
+      r.slug,
       r.category,
       r.base_rate_kobo,
       r.vat_kobo,
@@ -91,18 +121,24 @@ export async function GET(request: Request) {
     WHERE
       r.is_active = 1
       AND r.operational_status = 'available'
-      ${categoryClause}
+      ${filters.join("\n      ")}
 
       AND NOT EXISTS (
         SELECT 1
         FROM bookings b
         WHERE
           b.room_id = r.id
-          AND b.booking_status IN (
-            'pending',
-            'confirmed',
-            'checked_in'
+
+          AND (
+            b.booking_status IN ('confirmed', 'checked_in')
+
+            OR (
+              b.booking_status = 'pending'
+              AND b.hold_expires_at IS NOT NULL
+              AND datetime(b.hold_expires_at) > datetime('now')
+            )
           )
+
           AND b.check_in < ?
           AND b.check_out > ?
       )
@@ -128,28 +164,20 @@ export async function GET(request: Request) {
 
   const statement = env.zaram_hotels_db.prepare(sql);
 
-  const result = category
-    ? await statement
-        .bind(
-          category,
-          checkOut,
-          checkIn,
-          checkOut,
-          checkIn
-        )
-        .all<RoomRow>()
-    : await statement
-        .bind(
-          checkOut,
-          checkIn,
-          checkOut,
-          checkIn
-        )
-        .all<RoomRow>();
+  const result = await statement
+    .bind(
+      ...filterValues,
+      checkOut,
+      checkIn,
+      checkOut,
+      checkIn
+    )
+    .all<RoomRow>();
 
   const rooms = result.results.map((room: RoomRow) => ({
     id: room.id,
     name: room.name,
+    slug: room.slug,
     category: room.category,
     rate: {
       baseKobo: room.base_rate_kobo,
@@ -163,9 +191,20 @@ export async function GET(request: Request) {
   }));
 
   const categorySummary = {
-    vip: rooms.filter((room: { category: RoomRow["category"] }) => room.category === "vip").length,
-    big: rooms.filter((room: { category: RoomRow["category"] }) => room.category === "big").length,
-    medium: rooms.filter((room: { category: RoomRow["category"] }) => room.category === "medium").length,
+    vip: rooms.filter(
+      (room: { category: RoomRow["category"] }) =>
+        room.category === "vip"
+    ).length,
+
+    big: rooms.filter(
+      (room: { category: RoomRow["category"] }) =>
+        room.category === "big"
+    ).length,
+
+    medium: rooms.filter(
+      (room: { category: RoomRow["category"] }) =>
+        room.category === "medium"
+    ).length,
   };
 
   return Response.json(
@@ -174,6 +213,7 @@ export async function GET(request: Request) {
       checkIn,
       checkOut,
       category: category ?? "all",
+      slug: slug ?? null,
       availableCount: rooms.length,
       availability: categorySummary,
       rooms,
