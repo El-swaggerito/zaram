@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import "@fontsource-variable/playfair-display";
 import "@fontsource-variable/plus-jakarta-sans";
 
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import SiteChrome from "@/components/layout/SiteChrome";
 
 import "./globals.css";
 
@@ -25,9 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );
