@@ -16,8 +16,11 @@ type ActionBody = {
     | "check_out"
     | "cancel"
     | "no_show"
-    | "update_notes";
+    | "update_notes"
+    | "confirm_manual";
   notes?: string;
+  paymentReceived?: boolean;
+  paymentMethod?: string;
 };
 
 type BookingRow = {
@@ -25,6 +28,8 @@ type BookingRow = {
   booking_reference: string;
   booking_status: string;
   management_notes: string | null;
+  hold_expires_at: string | null;
+  total_amount_kobo: number;
 };
 
 const STATUS_ACTIONS = {
@@ -49,6 +54,13 @@ const STATUS_ACTIONS = {
     audit: "booking_marked_no_show",
   },
 } as const;
+
+const MANUAL_PAYMENT_METHODS = [
+  "cash",
+  "pos",
+  "bank_transfer",
+  "other",
+];
 
 export async function POST(
   request: Request,
@@ -103,7 +115,9 @@ export async function POST(
           id,
           booking_reference,
           booking_status,
-          management_notes
+          management_notes,
+          hold_expires_at,
+          total_amount_kobo
         FROM bookings
         WHERE booking_reference = ?
         LIMIT 1
@@ -122,8 +136,175 @@ export async function POST(
     );
   }
 
+  /*
+   * ADMIN MANUAL BOOKING
+   *
+   * The public hold endpoint creates and validates the temporary
+   * reservation first. This action converts that hold into a
+   * confirmed admin reservation.
+   */
+  if (body.action === "confirm_manual") {
+    if (booking.booking_status !== "pending") {
+      return Response.json(
+        {
+          success: false,
+          error: "Only a pending hold can be converted into a manual booking.",
+        },
+        { status: 409 }
+      );
+    }
+
+    if (
+      !booking.hold_expires_at ||
+      new Date(booking.hold_expires_at).getTime() <= Date.now()
+    ) {
+      return Response.json(
+        {
+          success: false,
+          error: "The temporary room hold has expired. Check availability again.",
+        },
+        { status: 409 }
+      );
+    }
+
+    const paymentReceived =
+      body.paymentReceived === true;
+
+    const paymentMethod =
+      body.paymentMethod?.trim() || "";
+
+    if (
+      paymentReceived &&
+      !MANUAL_PAYMENT_METHODS.includes(paymentMethod)
+    ) {
+      return Response.json(
+        {
+          success: false,
+          error: "Select a valid payment method.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const manualPaymentReference =
+      paymentReceived
+        ? `MANUAL-${crypto
+            .randomUUID()
+            .replaceAll("-", "")
+            .slice(0, 12)
+            .toUpperCase()}`
+        : null;
+
+    const source = paymentReceived
+      ? `admin_${paymentMethod}`
+      : "admin_manual";
+
+    const noteParts = [
+      `Manual booking created by ${admin.fullName}.`,
+    ];
+
+    if (paymentReceived) {
+      noteParts.push(
+        `Payment recorded as ${paymentMethod.replaceAll(
+          "_",
+          " "
+        )}.`
+      );
+    } else {
+      noteParts.push("Payment not yet received.");
+    }
+
+    if (body.notes?.trim()) {
+      noteParts.push(body.notes.trim());
+    }
+
+    const manualNote = noteParts.join("\n");
+
+    await db.batch([
+      db
+        .prepare(
+          `
+            UPDATE bookings
+            SET
+              booking_status = 'confirmed',
+              payment_status = ?,
+              amount_paid_kobo = ?,
+              payment_provider = NULL,
+              payment_reference = ?,
+              paid_at = ?,
+              hold_expires_at = NULL,
+              source = ?,
+              management_notes =
+                CASE
+                  WHEN management_notes IS NULL
+                    OR TRIM(management_notes) = ''
+                  THEN ?
+                  ELSE management_notes || char(10) || char(10) || ?
+                END,
+              updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+          `
+        )
+        .bind(
+          paymentReceived ? "paid" : "unpaid",
+          paymentReceived
+            ? booking.total_amount_kobo
+            : 0,
+          manualPaymentReference,
+          paymentReceived
+            ? new Date().toISOString()
+            : null,
+          source,
+          manualNote,
+          manualNote,
+          booking.id
+        ),
+
+      db
+        .prepare(
+          `
+            INSERT INTO audit_log (
+              admin_id,
+              action,
+              entity_type,
+              entity_id,
+              details
+            )
+            VALUES (?, ?, ?, ?, ?)
+          `
+        )
+        .bind(
+          admin.id,
+          "manual_booking_created",
+          "booking",
+          booking.booking_reference,
+          JSON.stringify({
+            paymentReceived,
+            paymentMethod:
+              paymentReceived
+                ? paymentMethod
+                : null,
+            paymentReference:
+              manualPaymentReference,
+            totalAmountKobo:
+              booking.total_amount_kobo,
+          })
+        ),
+    ]);
+
+    return Response.json({
+      success: true,
+      bookingReference:
+        booking.booking_reference,
+      bookingStatus: "confirmed",
+      paymentStatus:
+        paymentReceived ? "paid" : "unpaid",
+    });
+  }
+
   if (body.action === "update_notes") {
-    const notes = body.notes?.trim() || null;
+    const notes =
+      body.notes?.trim() || null;
 
     await db.batch([
       db
@@ -157,7 +338,8 @@ export async function POST(
           "booking",
           booking.booking_reference,
           JSON.stringify({
-            previousNotes: booking.management_notes,
+            previousNotes:
+              booking.management_notes,
             newNotes: notes,
           })
         ),
@@ -165,7 +347,8 @@ export async function POST(
 
     return Response.json({
       success: true,
-      bookingStatus: booking.booking_status,
+      bookingStatus:
+        booking.booking_status,
       managementNotes: notes,
     });
   }
@@ -213,7 +396,10 @@ export async function POST(
           WHERE id = ?
         `
       )
-      .bind(config.target, booking.id),
+      .bind(
+        config.target,
+        booking.id
+      ),
 
     db
       .prepare(
@@ -234,14 +420,17 @@ export async function POST(
         "booking",
         booking.booking_reference,
         JSON.stringify({
-          previousStatus: booking.booking_status,
-          newStatus: config.target,
+          previousStatus:
+            booking.booking_status,
+          newStatus:
+            config.target,
         })
       ),
   ]);
 
   return Response.json({
     success: true,
-    bookingStatus: config.target,
+    bookingStatus:
+      config.target,
   });
 }

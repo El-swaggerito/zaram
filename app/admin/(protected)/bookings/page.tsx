@@ -241,9 +241,18 @@ export default async function AdminBookingsPage({
               </p>
             </div>
 
-            <p className="text-sm font-semibold text-[#00321F]">
-              {bookings.length} result{bookings.length === 1 ? "" : "s"}
-            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-sm font-semibold text-[#00321F]">
+                {bookings.length} result{bookings.length === 1 ? "" : "s"}
+              </p>
+
+              <Link
+                href="/admin/bookings/new"
+                className="flex h-11 items-center bg-[#0B4A32] px-5 text-xs font-semibold uppercase tracking-[0.08em] text-white"
+              >
+                + New Booking
+              </Link>
+            </div>
           </div>
         </div>
 
