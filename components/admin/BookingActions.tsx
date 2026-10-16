@@ -141,7 +141,7 @@ export default function BookingActions({
             type="button"
             disabled={!canCheckIn || busy}
             onClick={() => performAction("check_in")}
-            className="h-11 bg-[#0B4A32] px-5 text-xs font-semibold uppercase tracking-[0.08em] text-white disabled:cursor-not-allowed disabled:opacity-30"
+            className="min-h-[48px] whitespace-nowrap bg-[#0B4A32] px-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-white disabled:cursor-not-allowed disabled:opacity-30"
           >
             Check In
           </button>
@@ -150,7 +150,7 @@ export default function BookingActions({
             type="button"
             disabled={!canCheckOut || busy}
             onClick={() => performAction("check_out")}
-            className="h-11 bg-[#0B4A32] px-5 text-xs font-semibold uppercase tracking-[0.08em] text-white disabled:cursor-not-allowed disabled:opacity-30"
+            className="min-h-[48px] whitespace-nowrap bg-[#0B4A32] px-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-white disabled:cursor-not-allowed disabled:opacity-30"
           >
             Check Out
           </button>
@@ -159,7 +159,7 @@ export default function BookingActions({
             type="button"
             disabled={!canNoShow || busy}
             onClick={() => performAction("no_show")}
-            className="h-11 border border-[#B88923]/40 bg-[#FFF8E8] px-5 text-xs font-semibold uppercase tracking-[0.08em] text-[#8A671C] disabled:cursor-not-allowed disabled:opacity-30"
+            className="min-h-[48px] whitespace-nowrap border border-[#B88923]/40 bg-[#FFF8E8] px-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8A671C] disabled:cursor-not-allowed disabled:opacity-30"
           >
             Mark No Show
           </button>
@@ -168,7 +168,7 @@ export default function BookingActions({
             type="button"
             disabled={!canCancel || busy}
             onClick={() => performAction("cancel")}
-            className="h-11 border border-red-200 bg-red-50 px-5 text-xs font-semibold uppercase tracking-[0.08em] text-red-700 disabled:cursor-not-allowed disabled:opacity-30"
+            className="min-h-[48px] whitespace-nowrap border border-red-200 bg-red-50 px-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-red-700 disabled:cursor-not-allowed disabled:opacity-30"
           >
             Cancel Booking
           </button>
