@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev --port 3001",
-    "build": "vite build",
+    "build": "vite build && npm run deploy:vinext",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "eslint",
     "dev:vinext": "vite dev --port 3001",

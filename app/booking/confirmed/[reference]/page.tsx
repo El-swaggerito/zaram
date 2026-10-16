@@ -175,8 +175,7 @@ export default async function BookingConfirmationPage({
                 </p>
 
                 <p className="mt-2 text-sm leading-6 text-[#404943]">
-                  A confirmation email will be sent here once we connect the
-                  email service: {booking.email}
+                  A booking confirmation has been sent to: {booking.email}
                 </p>
               </div>
             )}

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
+import HomeAvailability from "@/components/booking/HomeAvailability";
 
 const rooms = [
   {
@@ -149,55 +150,7 @@ export default function HomePage() {
       <section className="relative z-20 bg-[#F7F3EA] pb-6">
         <div className="mx-auto -mt-10 max-w-[1160px] px-5 sm:px-6 md:-mt-12 lg:px-10">
           <Reveal direction="up" delay={100}>
-            <form className="grid grid-cols-1 border border-[#0B4A32]/15 bg-[#F7F3EA] p-2 shadow-[0_8px_30px_rgba(11,74,50,0.12)] md:grid-cols-4 md:p-3">
-
-              <label className="border-b border-[#0B4A32]/15 px-6 py-4 md:border-b-0 md:border-r">
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0B4A32]/65">
-                  Check-In
-                </span>
-
-                <input
-                  type="date"
-                  className="mt-1 w-full bg-transparent text-sm text-[#20251F] outline-none"
-                />
-              </label>
-
-              <label className="border-b border-[#0B4A32]/15 px-6 py-4 md:border-b-0 md:border-r">
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0B4A32]/65">
-                  Check-Out
-                </span>
-
-                <input
-                  type="date"
-                  className="mt-1 w-full bg-transparent text-sm text-[#20251F] outline-none"
-                />
-              </label>
-
-              <label className="border-b border-[#0B4A32]/15 px-6 py-4 md:border-b-0 md:border-r">
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0B4A32]/65">
-                  Guests
-                </span>
-
-                <select
-                  defaultValue="2"
-                  className="mt-1 w-full bg-transparent text-sm text-[#20251F] outline-none"
-                >
-                  <option value="1">1 Adult</option>
-                  <option value="2">2 Adults</option>
-                  <option value="3">3 Adults</option>
-                  <option value="4">2 Adults, 2 Children</option>
-                </select>
-              </label>
-
-              <div className="flex items-center p-2 md:pl-4">
-                <Link
-                  href="/contact#reservation"
-                  className="zaram-button flex min-h-12 w-full items-center justify-center bg-[#0B4A32] px-5 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038] md:h-full"
-                >
-                  Check Availability →
-                </Link>
-              </div>
-            </form>
+            <HomeAvailability />
           </Reveal>
         </div>
       </section>

@@ -1,7 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { formatNaira } from "@/data/rooms";
 
@@ -43,6 +43,7 @@ function nightsBetween(checkIn: string, checkOut: string) {
 
 export default function BookingAvailability({ room }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState(1);
@@ -61,6 +62,47 @@ export default function BookingAvailability({ room }: Props) {
   const [creatingHold, setCreatingHold] = useState(false);
   const [hold, setHold] = useState<HoldResponse["booking"] | null>(null);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const initialCheckIn = searchParams.get("checkIn");
+    const initialCheckOut = searchParams.get("checkOut");
+    const initialAdults = searchParams.get("adults");
+    const initialChildren = searchParams.get("children");
+    const availabilityChecked = searchParams.get("availabilityChecked");
+
+    if (initialCheckIn) {
+      setCheckIn(initialCheckIn);
+    }
+
+    if (initialCheckOut) {
+      setCheckOut(initialCheckOut);
+    }
+
+    if (initialAdults) {
+      const value = Number(initialAdults);
+
+      if (Number.isInteger(value) && value >= 1 && value <= 4) {
+        setAdults(value);
+      }
+    }
+
+    if (initialChildren) {
+      const value = Number(initialChildren);
+
+      if (Number.isInteger(value) && value >= 0 && value <= 3) {
+        setChildren(value);
+      }
+    }
+
+    if (
+      availabilityChecked === "1" &&
+      initialCheckIn &&
+      initialCheckOut &&
+      initialCheckOut > initialCheckIn
+    ) {
+      setAvailable(true);
+    }
+  }, [searchParams]);
 
   const nights =
     checkIn && checkOut && checkOut > checkIn
