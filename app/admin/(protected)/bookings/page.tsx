@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { env } from "cloudflare:workers";
 
 import { formatNaira } from "@/data/rooms";
@@ -397,9 +398,12 @@ export default async function AdminBookingsPage({
                     className="border-b border-[#0B4A32]/8 last:border-0 hover:bg-[#F7F3EA]"
                   >
                     <td className="px-5 py-5">
-                      <p className="text-sm font-semibold text-[#00321F]">
+                      <Link
+                        href={`/admin/bookings/${booking.booking_reference}`}
+                        className="text-sm font-semibold text-[#00321F] hover:text-[#B88923]"
+                      >
                         {booking.booking_reference}
-                      </p>
+                      </Link>
 
                       <p className="mt-1 text-[11px] text-[#7A817D]">
                         {booking.created_at}
