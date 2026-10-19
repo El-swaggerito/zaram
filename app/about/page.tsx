@@ -94,13 +94,9 @@ export default function AboutPage() {
     <main className="bg-[#F7F3EA] pt-20">
 
       {/* HERO */}
-      <section className="relative flex h-[52vh] min-h-[430px] max-h-[620px] items-end overflow-hidden bg-[#0B4A32]">
+      <section className="relative overflow-hidden bg-[#0B4A32] py-24 text-white md:py-32">
 
-        <ImagePlaceholder
-          label="About Hero Image"
-          dark
-          className="absolute inset-0 h-full w-full"
-        />
+        
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#00321F] via-[#00321F]/75 to-[#00321F]/25" />
 

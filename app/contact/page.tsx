@@ -81,13 +81,9 @@ export default function ContactPage() {
     <main className="bg-[#F7F3EA] pt-20">
 
       {/* HERO */}
-      <section className="relative flex h-[46vh] min-h-[390px] max-h-[540px] items-end overflow-hidden bg-[#0B4A32]">
+      <section className="relative overflow-hidden bg-[#0B4A32] py-24 text-white md:py-32">
 
-        <ImagePlaceholder
-          label="Contact Hero Image"
-          dark
-          className="absolute inset-0 h-full w-full"
-        />
+        
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#00321F] via-[#00321F]/75 to-[#00321F]/25" />
 
@@ -260,6 +256,13 @@ export default function ContactPage() {
                     Complete the form below and our team will get back to you.
                   </p>
 
+                  <a
+                    href="#location"
+                    className="mt-6 inline-flex h-11 items-center justify-center border border-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-[#0B4A32] transition hover:bg-[#0B4A32] hover:text-white"
+                  >
+                    View Location ↓
+                  </a>
+
                   <div className="mt-8">
                     <Suspense
                       fallback={
@@ -277,7 +280,10 @@ export default function ContactPage() {
       </section>
 
       {/* LOCATION */}
-      <section className="overflow-hidden bg-[#0B4A32] py-24 text-[#F7F3EA]">
+      <section
+        id="location"
+        className="scroll-mt-24 overflow-hidden bg-[#0B4A32] py-24 text-[#F7F3EA]"
+      >
         <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-10">
 
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
@@ -314,11 +320,16 @@ export default function ContactPage() {
             <div className="lg:col-span-7">
               <Reveal direction="right" delay={120}>
 
-                <div className="zaram-image-hover">
-                  <ImagePlaceholder
-                    label="Map / Location"
-                    dark
-                    className="aspect-[16/10] w-full border border-[#F7F3EA]/10"
+                <div className="zaram-image-hover overflow-hidden border border-white/10">
+                  <iframe
+                    title="Zaram Hotels & Garden location"
+                    src="https://www.google.com/maps?q=EFAB%20Global%20Estate%2C%20Road%20121%2C%20House%208%2C%20Abuja%2C%20Nigeria&output=embed"
+                    width="100%"
+                    height="100%"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="block h-[420px] w-full border-0 md:h-[480px]"
                   />
                 </div>
               </Reveal>
@@ -494,6 +505,6 @@ export default function ContactPage() {
           </Reveal>
         </div>
       </section>
-    </main>
+        </main>
   );
 }

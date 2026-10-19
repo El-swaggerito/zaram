@@ -32,7 +32,7 @@ export default function RoomsPage() {
     <main className="bg-[#F7F3EA] pt-20">
 
       {/* HERO */}
-      <section className="relative flex h-[50vh] min-h-[420px] max-h-[580px] items-end overflow-hidden bg-[#0B4A32]">
+      <section className="relative overflow-hidden bg-[#0B4A32] py-24 text-white md:py-32">
 
         <div className="absolute inset-0 bg-[#174735]" />
 

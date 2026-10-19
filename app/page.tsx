@@ -151,6 +151,15 @@ export default function HomePage() {
         <div className="mx-auto -mt-10 max-w-[1160px] px-5 sm:px-6 md:-mt-12 lg:px-10">
           <Reveal direction="up" delay={100}>
             <HomeAvailability />
+
+            <div className="mt-5 flex justify-center">
+              <a
+                href="/contact#location"
+                className="inline-flex h-11 items-center justify-center border border-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-[#0B4A32] transition hover:bg-[#0B4A32] hover:text-white"
+              >
+                View Hotel Location ↓
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
