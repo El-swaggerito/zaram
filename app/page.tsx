@@ -99,17 +99,32 @@ export default function HomePage() {
     <main className="bg-[#F7F3EA] pt-20">
 
       {/* HERO */}
-      <section className="relative flex min-h-[560px] h-[calc(100vh-80px)] max-h-[820px] items-end overflow-hidden bg-[#0B4A32]">
+      <section className="relative flex min-h-[560px] h-[calc(100vh-80px)] max-h-[820px] items-end overflow-hidden">
 
-        <ImagePlaceholder
-          label="Hero Hotel Image"
-          className="absolute inset-0 h-full w-full border-0 bg-[#244A3A]"
+        <video
+          autoPlay
+          muted
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover opacity-100"
+        >
+          <source
+            src="/images/home/hero-video.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        <div
+          className="hero-after-video-overlay absolute inset-0 bg-black/20"
+          aria-hidden="true"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B4A32] via-[#0B4A32]/80 to-[#20251F]/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B4A32]/85 via-[#0B4A32]/30 to-transparent" />
 
-        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-5 pb-24 sm:px-6 md:pb-28 lg:px-10">
+        
+
+
+        <div className="hero-after-video relative z-10 mx-auto w-full max-w-[1280px] px-5 pb-24 sm:px-6 md:pb-28 lg:px-10">
           <div className="max-w-xl">
 
             <p className="zaram-hero-reveal zaram-delay-1 text-xs font-semibold uppercase tracking-[0.20em] text-[#C89D35]">

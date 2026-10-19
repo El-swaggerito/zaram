@@ -269,3 +269,39 @@ img {
     transition: none !important;
   }
 }
+
+
+/* Homepage hero content appears after the intro video finishes */
+.hero-after-video {
+  opacity: 0;
+  animation: heroContentReveal 700ms ease-out 3s forwards;
+}
+
+@keyframes heroContentReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Faint hero overlay appears with the hero content */
+.hero-after-video-overlay {
+  opacity: 0;
+  animation: heroOverlayReveal 700ms ease-out 3s forwards;
+}
+
+@keyframes heroOverlayReveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
