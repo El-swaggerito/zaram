@@ -10,10 +10,7 @@ export const siteConfig = {
       label: "Rooms",
       href: "/rooms",
     },
-    {
-      label: "About",
-      href: "/about",
-    },
+    
     {
       label: "Contact",
       href: "/contact",

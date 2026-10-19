@@ -17,21 +17,24 @@ const rooms = [
     price: "₦75,250",
     description:
       "Our premium room category, offering generous space and elevated comfort. Available as Nigeria and Morocco.",
-    placeholder: "VIP Room Image",
+    image: "/images/rooms/nigeria.jpeg",
+    alt: "Nigeria VIP Room at Zaram Hotels",
   },
   {
     name: "Big Rooms",
     price: "₦59,125",
     description:
       "Spacious rooms designed for a comfortable and relaxing stay. Available as Ghana, Kenya and Rwanda.",
-    placeholder: "Big Room Image",
+    image: "/images/rooms/kenya.jpeg",
+    alt: "Kenya Big Room at Zaram Hotels",
   },
   {
     name: "Medium Rooms",
     price: "₦53,750",
     description:
       "Comfortable, well-appointed rooms with everything needed for an enjoyable stay. Available as Egypt, Mozambique and Botswana.",
-    placeholder: "Medium Room Image",
+    image: "/images/rooms/botswana.jpeg",
+    alt: "Botswana Medium Room at Zaram Hotels",
   },
 ];
 
@@ -188,10 +191,13 @@ export default function HomePage() {
             <div className="lg:col-span-7">
               <Reveal direction="left">
                 <div className="zaram-image-hover">
-                  <ImagePlaceholder
-                    label="Hotel Introduction Image"
-                    className="aspect-[16/11] w-full"
-                  />
+                  <div className="relative h-full min-h-[420px] overflow-hidden">
+              <img
+                src="/images/home/reception.jpeg"
+                alt="Zaram Hotels reception and lounge"
+                className="h-full w-full object-cover"
+              />
+            </div>
                 </div>
               </Reveal>
             </div>
@@ -213,12 +219,7 @@ export default function HomePage() {
                     short visits and longer stays.
                   </p>
 
-                  <Link
-                    href="/about"
-                    className="zaram-link mt-8 inline-flex items-center gap-2 border-b border-[#0B4A32]/30 pb-1 text-sm font-semibold uppercase tracking-[0.08em] text-[#0B4A32] hover:text-[#C89D35]"
-                  >
-                    About Zaram →
-                  </Link>
+                  
                 </div>
               </Reveal>
             </div>
@@ -266,10 +267,11 @@ export default function HomePage() {
               >
                 <article className="group flex h-full flex-col">
 
-                  <div className="zaram-image-hover overflow-hidden">
-                    <ImagePlaceholder
-                      label={room.placeholder}
-                      className="aspect-[4/3] w-full"
+                  <div className="zaram-image-hover aspect-[4/3] overflow-hidden">
+                    <img
+                      src={room.image}
+                      alt={room.alt}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                     />
                   </div>
 
@@ -332,12 +334,7 @@ export default function HomePage() {
 
                   <div className="mt-8 flex flex-wrap items-center gap-6">
 
-                    <Link
-                      href="/about"
-                      className="zaram-button inline-flex h-12 items-center justify-center bg-[#C89D35] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-[#0B4A32] hover:bg-[#D4A942]"
-                    >
-                      Discover Zaram
-                    </Link>
+                    
 
                     <Link
                       href="/contact"
