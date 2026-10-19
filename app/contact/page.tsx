@@ -421,10 +421,13 @@ export default function ContactPage() {
               <Reveal direction="left">
 
                 <div className="zaram-image-hover">
-                  <ImagePlaceholder
-                    label="Reservation Support Image"
-                    className="aspect-[16/10] w-full"
+                  <div className="aspect-[16/10] w-full overflow-hidden">
+                  <img
+                    src="/images/home/reception.jpeg"
+                    alt="Zaram Hotels reception"
+                    className="h-full w-full object-cover"
                   />
+                </div>
                 </div>
               </Reveal>
             </div>
