@@ -2,7 +2,7 @@ export const ADMIN_SESSION_COOKIE = "zaram_admin_session";
 
 export const ADMIN_SESSION_TTL_SECONDS = 60 * 60 * 12; // 12 hours
 
-const PBKDF2_ITERATIONS = 600_000;
+const PBKDF2_ITERATIONS = 100_000;
 const PBKDF2_KEY_LENGTH = 32;
 const SALT_LENGTH = 16;
 
