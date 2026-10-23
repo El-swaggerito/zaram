@@ -350,10 +350,13 @@ export default function HomePage() {
             <div className="order-1 lg:order-2 lg:col-span-7">
               <Reveal direction="right" delay={120}>
                 <div className="zaram-image-hover">
-                  <ImagePlaceholder
-                    label="Zaram Experience Image"
-                    className="aspect-[16/11] w-full bg-[#163D2E] text-white"
-                  />
+                  <div className="aspect-[16/11] w-full overflow-hidden">
+                    <img
+                      src="/images/home/bar.jpg"
+                      alt="Bar and lounge at Zaram Hotels & Garden"
+                      className="h-full w-full object-cover transition duration-500 hover:scale-[1.02]"
+                    />
+                  </div>
                 </div>
               </Reveal>
             </div>
