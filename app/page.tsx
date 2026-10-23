@@ -16,7 +16,7 @@ const rooms = [
     name: "VIP Rooms",
     price: "₦75,250",
     description:
-      "Our premium room category, offering generous space and elevated comfort. Available as Nigeria and Morocco.",
+      "Our premium room category, offering generous space and elevated comfort. Available as Nigeria and Rwanda.",
     image: "/images/rooms/nigeria.jpeg",
     alt: "Nigeria VIP Room at Zaram Hotels",
   },
@@ -24,7 +24,7 @@ const rooms = [
     name: "Big Rooms",
     price: "₦59,125",
     description:
-      "Spacious rooms designed for a comfortable and relaxing stay. Available as Ghana, Kenya and Rwanda.",
+      "Spacious rooms designed for a comfortable and relaxing stay. Available as Ghana, Kenya and Morocco.",
     image: "/images/rooms/kenya.jpeg",
     alt: "Kenya Big Room at Zaram Hotels",
   },
