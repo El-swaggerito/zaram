@@ -1,37 +1,142 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import {
+  type FormEvent,
+  useEffect,
+  useState,
+} from "react";
+import {
+  useSearchParams,
+} from "next/navigation";
+import {
+  ArrowRight,
+} from "lucide-react";
 
 export default function ContactForm() {
-  const searchParams = useSearchParams();
+  const searchParams =
+    useSearchParams();
 
-  const [enquiryType, setEnquiryType] = useState("room");
-  const [submitted, setSubmitted] = useState(false);
+  const [
+    enquiryType,
+    setEnquiryType,
+  ] = useState("room");
+
+  const [
+    submitted,
+    setSubmitted,
+  ] = useState(false);
+
+  const [
+    submitting,
+    setSubmitting,
+  ] = useState(false);
+
+  const [
+    error,
+    setError,
+  ] = useState("");
 
   useEffect(() => {
-    const room = searchParams.get("room");
+    const room =
+      searchParams.get("room");
 
     if (room) {
-      setEnquiryType("reservation");
+      setEnquiryType(
+        "reservation"
+      );
     }
   }, [searchParams]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event:
+      FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
 
-    setSubmitted(true);
+    const form =
+      event.currentTarget;
 
-    const form = event.currentTarget;
-    form.reset();
+    const data =
+      new FormData(form);
 
-    const room = searchParams.get("room");
+    setSubmitting(true);
+    setSubmitted(false);
+    setError("");
 
-    if (room) {
-      setEnquiryType("reservation");
-    } else {
-      setEnquiryType("room");
+    try {
+      const response =
+        await fetch(
+          "/api/contact",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              fullName:
+                data.get(
+                  "fullName"
+                ),
+              email:
+                data.get("email"),
+              phone:
+                data.get("phone"),
+              enquiryType:
+                data.get(
+                  "enquiryType"
+                ),
+              message:
+                data.get(
+                  "message"
+                ),
+              website:
+                data.get(
+                  "website"
+                ),
+              room:
+                searchParams.get(
+                  "room"
+                ),
+            }),
+          }
+        );
+
+      const result =
+        await response.json();
+
+      if (
+        !response.ok ||
+        !result.success
+      ) {
+        throw new Error(
+          result.error ||
+            "Unable to send your enquiry."
+        );
+      }
+
+      setSubmitted(true);
+
+      form.reset();
+
+      const room =
+        searchParams.get(
+          "room"
+        );
+
+      setEnquiryType(
+        room
+          ? "reservation"
+          : "room"
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to send your enquiry."
+      );
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -50,7 +155,9 @@ export default function ContactForm() {
         </h3>
 
         <p className="mt-2 text-sm text-[#404943]">
-          Our front office will respond as soon as possible.
+          Our front office will
+          respond as soon as
+          possible.
         </p>
       </div>
 
@@ -59,7 +166,17 @@ export default function ContactForm() {
           role="status"
           className="mb-6 border border-[#0B4A32]/15 bg-[#EAE1D5] px-5 py-4 text-sm text-[#0B4A32]"
         >
-          Thank you. Your enquiry has been recorded.
+          Thank you. Your enquiry
+          has been sent successfully.
+        </div>
+      )}
+
+      {error && (
+        <div
+          role="alert"
+          className="mb-6 border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700"
+        >
+          {error}
         </div>
       )}
 
@@ -67,8 +184,17 @@ export default function ContactForm() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-5"
       >
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="absolute -left-[9999px] h-px w-px opacity-0"
+        />
 
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <label className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-[0.10em] text-[#20251F]">
               Full Name
@@ -78,6 +204,7 @@ export default function ContactForm() {
               required
               type="text"
               name="fullName"
+              maxLength={120}
               placeholder="e.g. John Doe"
               className="h-12 bg-white px-4 text-sm text-[#20251F] outline-none ring-1 ring-transparent transition focus:ring-[#C89D35]"
             />
@@ -92,6 +219,7 @@ export default function ContactForm() {
               required
               type="email"
               name="email"
+              maxLength={180}
               placeholder="e.g. john@example.com"
               className="h-12 bg-white px-4 text-sm text-[#20251F] outline-none ring-1 ring-transparent transition focus:ring-[#C89D35]"
             />
@@ -99,7 +227,6 @@ export default function ContactForm() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-
           <label className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-[0.10em] text-[#20251F]">
               Phone Number
@@ -108,6 +235,7 @@ export default function ContactForm() {
             <input
               type="tel"
               name="phone"
+              maxLength={50}
               placeholder="e.g. +234 800 000 0000"
               className="h-12 bg-white px-4 text-sm text-[#20251F] outline-none ring-1 ring-transparent transition focus:ring-[#C89D35]"
             />
@@ -121,13 +249,31 @@ export default function ContactForm() {
             <select
               name="enquiryType"
               value={enquiryType}
-              onChange={(event) => setEnquiryType(event.target.value)}
+              onChange={(
+                event
+              ) =>
+                setEnquiryType(
+                  event.target
+                    .value
+                )
+              }
               className="h-12 cursor-pointer bg-white px-4 text-sm text-[#20251F] outline-none ring-1 ring-transparent transition focus:ring-[#C89D35]"
             >
-              <option value="room">Room Enquiry</option>
-              <option value="reservation">Reservation</option>
-              <option value="general">General Enquiry</option>
-              <option value="other">Other</option>
+              <option value="room">
+                Room Enquiry
+              </option>
+
+              <option value="reservation">
+                Reservation
+              </option>
+
+              <option value="general">
+                General Enquiry
+              </option>
+
+              <option value="other">
+                Other
+              </option>
             </select>
           </label>
         </div>
@@ -141,6 +287,7 @@ export default function ContactForm() {
             required
             name="message"
             rows={5}
+            maxLength={3000}
             placeholder="Tell us how we can assist you..."
             className="resize-none bg-white p-4 text-sm text-[#20251F] outline-none ring-1 ring-transparent transition focus:ring-[#C89D35]"
           />
@@ -148,11 +295,18 @@ export default function ContactForm() {
 
         <button
           type="submit"
-          className="mt-1 inline-flex h-12 w-full items-center justify-center gap-2 bg-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.10em] text-[#F7F3EA] transition-colors hover:bg-[#145038]"
+          disabled={submitting}
+          className="mt-1 inline-flex h-12 w-full items-center justify-center gap-2 bg-[#0B4A32] px-6 text-xs font-semibold uppercase tracking-[0.10em] text-[#F7F3EA] transition-colors hover:bg-[#145038] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {submitted ? "Message Sent" : "Send Message"}
+          {submitting
+            ? "Sending..."
+            : submitted
+              ? "Message Sent"
+              : "Send Message"}
 
-          <ArrowRight size={15} />
+          <ArrowRight
+            size={15}
+          />
         </button>
       </form>
     </div>

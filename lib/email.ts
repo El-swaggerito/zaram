@@ -182,3 +182,228 @@ export async function sendBookingConfirmationEmails(
     testMode: TEST_MODE,
   };
 }
+
+type ContactEnquiryEmailData = {
+  fullName: string;
+  email: string;
+  phone: string;
+  enquiryType: string;
+  message: string;
+  room: string | null;
+};
+
+function enquiryTypeLabel(
+  value: string
+) {
+  switch (value) {
+    case "room":
+      return "Room Enquiry";
+    case "reservation":
+      return "Reservation";
+    case "general":
+      return "General Enquiry";
+    case "other":
+      return "Other";
+    default:
+      return value;
+  }
+}
+
+export async function sendContactEnquiryEmails(
+  enquiry: ContactEnquiryEmailData
+) {
+  const apiKey =
+    (env as EmailEnv)
+      .RESEND_API_KEY;
+
+  if (!apiKey) {
+    throw new Error(
+      "RESEND_API_KEY is not configured."
+    );
+  }
+
+  const resend =
+    new Resend(apiKey);
+
+  const managementRecipient =
+    TEST_MODE
+      ? TEST_RECIPIENT
+      : MANAGEMENT_EMAIL;
+
+  const guestRecipient =
+    TEST_MODE
+      ? TEST_RECIPIENT
+      : enquiry.email;
+
+  const typeLabel =
+    enquiryTypeLabel(
+      enquiry.enquiryType
+    );
+
+  const managementHtml = `
+    <!doctype html>
+    <html>
+      <body style="margin:0;background:#F7F3EA;font-family:Arial,sans-serif;color:#20251F;">
+        <div style="max-width:640px;margin:0 auto;padding:40px 20px;">
+          <div style="background:#00321F;padding:28px;text-align:center;">
+            <h1 style="margin:0;color:#ffffff;font-family:Georgia,serif;">
+              Zaram Hotels & Garden
+            </h1>
+          </div>
+
+          <div style="background:#ffffff;padding:34px;">
+            <p style="margin-top:0;color:#B88923;font-size:12px;font-weight:700;letter-spacing:2px;">
+              NEW WEBSITE ENQUIRY
+            </p>
+
+            <h2 style="font-family:Georgia,serif;color:#00321F;font-size:28px;">
+              ${escapeHtml(typeLabel)}
+            </h2>
+
+            <p>
+              <strong>Name:</strong>
+              ${escapeHtml(enquiry.fullName)}
+            </p>
+
+            <p>
+              <strong>Email:</strong>
+              ${escapeHtml(enquiry.email)}
+            </p>
+
+            <p>
+              <strong>Phone:</strong>
+              ${escapeHtml(enquiry.phone || "Not provided")}
+            </p>
+
+            ${
+              enquiry.room
+                ? `
+                  <p>
+                    <strong>Room:</strong>
+                    ${escapeHtml(enquiry.room)}
+                  </p>
+                `
+                : ""
+            }
+
+            <div style="margin-top:24px;padding:20px;background:#F7F3EA;">
+              <p style="margin-top:0;">
+                <strong>Message</strong>
+              </p>
+
+              <p style="margin-bottom:0;line-height:1.7;white-space:pre-wrap;">
+                ${escapeHtml(enquiry.message)}
+              </p>
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const guestHtml = `
+    <!doctype html>
+    <html>
+      <body style="margin:0;background:#F7F3EA;font-family:Arial,sans-serif;color:#00321F;">
+        <div style="max-width:640px;margin:0 auto;padding:40px 20px;">
+          <div style="background:#00321F;padding:32px;text-align:center;">
+            <h1 style="margin:0;color:#ffffff;font-family:Georgia,serif;">
+              Zaram Hotels & Garden
+            </h1>
+          </div>
+
+          <div style="background:#ffffff;padding:36px;">
+            <p style="margin-top:0;color:#B88923;font-size:12px;font-weight:700;letter-spacing:2px;">
+              ENQUIRY RECEIVED
+            </p>
+
+            <h2 style="font-family:Georgia,serif;font-size:30px;margin-bottom:16px;">
+              Thank you, ${escapeHtml(enquiry.fullName)}
+            </h2>
+
+            <p style="line-height:1.7;color:#404943;">
+              We have received your ${escapeHtml(typeLabel.toLowerCase())}.
+              Our team will review your message and respond as soon as possible.
+            </p>
+
+            <div style="margin:28px 0;background:#F7F3EA;padding:20px;">
+              <p style="margin-top:0;color:#7A817D;font-size:12px;font-weight:700;">
+                YOUR MESSAGE
+              </p>
+
+              <p style="margin-bottom:0;line-height:1.7;white-space:pre-wrap;color:#404943;">
+                ${escapeHtml(enquiry.message)}
+              </p>
+            </div>
+
+            <p style="line-height:1.7;color:#404943;">
+              If your enquiry is urgent, please call us on
+              <strong>08139654033</strong>.
+            </p>
+
+            <p style="margin-bottom:0;color:#404943;">
+              Zaram Hotels & Garden<br>
+              EFAB Global Estate, Road 121, House 8, Abuja<br>
+              08139654033
+            </p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const managementResult =
+    await resend.emails.send({
+      from:
+        "Zaram Hotels <onboarding@resend.dev>",
+      to: [
+        managementRecipient,
+      ],
+      replyTo:
+        enquiry.email,
+      subject:
+        `New ${typeLabel} - ${enquiry.fullName}`,
+      html:
+        managementHtml,
+    });
+
+  if (
+    managementResult.error
+  ) {
+    throw new Error(
+      `Management enquiry email failed: ${managementResult.error.message}`
+    );
+  }
+
+  const guestResult =
+    await resend.emails.send({
+      from:
+        "Zaram Hotels <onboarding@resend.dev>",
+      to: [
+        guestRecipient,
+      ],
+      subject:
+        "We received your enquiry - Zaram Hotels",
+      html:
+        guestHtml,
+    });
+
+  if (guestResult.error) {
+    throw new Error(
+      `Guest acknowledgement email failed: ${guestResult.error.message}`
+    );
+  }
+
+  return {
+    managementEmailId:
+      managementResult.data?.id ??
+      null,
+
+    guestEmailId:
+      guestResult.data?.id ??
+      null,
+
+    testMode:
+      TEST_MODE,
+  };
+}
