@@ -1,4 +1,4 @@
-import MockPayment from "@/components/booking/MockPayment";
+import PaystackPayment from "@/components/booking/PaystackPayment";
 
 type PageProps = {
   params: Promise<{
@@ -25,7 +25,7 @@ export default async function PaymentPage({ params }: PageProps) {
 
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-5 sm:px-6">
-          <MockPayment reference={reference} />
+          <PaystackPayment reference={reference} />
         </div>
       </section>
     </main>

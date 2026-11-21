@@ -265,12 +265,6 @@ export async function POST(request: Request) {
 
     const guestId = Number(guestResult.meta.last_row_id);
 
-    const paymentReference = `MOCK-${crypto
-      .randomUUID()
-      .replace(/-/g, "")
-      .slice(0, 12)
-      .toUpperCase()}`;
-
     const bookingResult = await db
       .prepare(
         `
@@ -302,8 +296,8 @@ export async function POST(request: Request) {
             'website',
             ?,
             ?,
-            'mock',
-            ?
+            NULL,
+            NULL
           )
         `
       )
@@ -319,8 +313,7 @@ export async function POST(request: Request) {
         numberOfNights,
         totalAmountKobo,
         specialRequests?.trim() || null,
-        holdExpiresAt,
-        paymentReference
+        holdExpiresAt
       )
       .run();
 
@@ -330,7 +323,7 @@ export async function POST(request: Request) {
         booking: {
           id: Number(bookingResult.meta.last_row_id),
           reference: bookingReference,
-          paymentReference,
+          paymentReference: null,
           room: {
             id: room.id,
             name: room.name,
@@ -345,7 +338,7 @@ export async function POST(request: Request) {
           totalAmountKobo,
           bookingStatus: "pending",
           paymentStatus: "unpaid",
-          paymentProvider: "mock",
+          paymentProvider: null,
           holdExpiresAt,
           holdMinutes: HOLD_MINUTES,
         },

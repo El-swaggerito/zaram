@@ -514,7 +514,7 @@ export default function BookingAvailability({ room }: Props) {
               onClick={() => router.push(`/payment/${hold.reference}`)}
               className="zaram-button mt-7 inline-flex h-12 w-full items-center justify-center bg-[#0B4A32] px-8 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#145038]"
             >
-              Proceed to Mock Payment
+              Proceed to Secure Payment
             </button>
 
             <p className="mt-3 text-center text-xs text-[#404943]/70">

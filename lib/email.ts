@@ -13,6 +13,9 @@ type BookingEmailData = {
   adults: number;
   children: number;
   totalAmountKobo: number;
+  paymentReference: string | null;
+  paymentProvider: string | null;
+  paidAt: string | null;
 };
 
 type EmailEnv = Cloudflare.Env & {
@@ -22,11 +25,12 @@ type EmailEnv = Cloudflare.Env & {
 const MANAGEMENT_EMAIL = "zaramhotel10@gmail.com";
 
 /*
- * Keep this true until Zaram has a verified sending domain in Resend.
- * In test mode, emails are sent to Resend's test delivery address.
+ * Production sending is enabled because zaramhotel.com
+ * is verified in Resend.
  */
-const TEST_MODE = true;
+const TEST_MODE = false;
 const TEST_RECIPIENT = "delivered@resend.dev";
+const FROM_EMAIL = "Zaram Hotels <reservations@zaramhotel.com>";
 
 function escapeHtml(value: string) {
   return value
@@ -50,6 +54,40 @@ function formatDate(value: string) {
     dateStyle: "long",
     timeZone: "UTC",
   }).format(new Date(`${value}T00:00:00Z`));
+}
+
+function formatDateTime(value: string | null) {
+  if (!value) {
+    return "Not available";
+  }
+
+  const normalised =
+    value.includes("T")
+      ? value
+      : `${value.replace(" ", "T")}Z`;
+
+  const date = new Date(normalised);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "Africa/Lagos",
+  }).format(date);
+}
+
+function paymentProviderLabel(value: string | null) {
+  switch (value) {
+    case "paystack":
+      return "Paystack";
+    case "mock":
+      return "Mock payment";
+    default:
+      return value || "Online payment";
+  }
 }
 
 export async function sendBookingConfirmationEmails(
@@ -125,6 +163,58 @@ export async function sendBookingConfirmationEmails(
     </html>
   `;
 
+  const receiptHtml = `
+    <!doctype html>
+    <html>
+      <body style="margin:0;background:#F7F3EA;font-family:Arial,sans-serif;color:#00321F;">
+        <div style="max-width:640px;margin:0 auto;padding:40px 20px;">
+          <div style="background:#00321F;padding:32px;text-align:center;">
+            <h1 style="margin:0;color:#ffffff;font-family:Georgia,serif;">
+              Zaram Hotels & Garden
+            </h1>
+          </div>
+
+          <div style="background:#ffffff;padding:36px;">
+            <p style="margin-top:0;color:#B88923;font-size:12px;font-weight:700;letter-spacing:2px;">
+              PAYMENT RECEIPT
+            </p>
+
+            <h2 style="font-family:Georgia,serif;font-size:30px;margin-bottom:16px;">
+              Payment received
+            </h2>
+
+            <p style="line-height:1.7;color:#404943;">
+              Thank you, ${escapeHtml(booking.guestName)}. This receipt confirms
+              payment for your reservation at Zaram Hotels & Garden.
+            </p>
+
+            <div style="margin:28px 0;border-top:1px solid #ddd;border-bottom:1px solid #ddd;padding:20px 0;">
+              <p><strong>Booking reference:</strong> ${escapeHtml(booking.bookingReference)}</p>
+              <p><strong>Payment reference:</strong> ${escapeHtml(booking.paymentReference || "Not available")}</p>
+              <p><strong>Payment method:</strong> ${escapeHtml(paymentProviderLabel(booking.paymentProvider))}</p>
+              <p><strong>Payment date:</strong> ${escapeHtml(formatDateTime(booking.paidAt))}</p>
+              <p><strong>Guest:</strong> ${escapeHtml(booking.guestName)}</p>
+              <p><strong>Room:</strong> ${escapeHtml(booking.roomName)}</p>
+              <p><strong>Check-in:</strong> ${formatDate(booking.checkIn)}</p>
+              <p><strong>Check-out:</strong> ${formatDate(booking.checkOut)}</p>
+              <p><strong>Amount paid:</strong> ${formatNaira(booking.totalAmountKobo)}</p>
+            </div>
+
+            <p style="line-height:1.7;color:#404943;">
+              Please keep this receipt together with your booking reference.
+            </p>
+
+            <p style="margin-bottom:0;color:#404943;">
+              Zaram Hotels & Garden<br>
+              EFAB Global Estate, Road 121, House 8, Abuja<br>
+              08139654033
+            </p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
   const managementHtml = `
     <!doctype html>
     <html>
@@ -146,12 +236,15 @@ export async function sendBookingConfirmationEmails(
         <p><strong>Adults:</strong> ${booking.adults}</p>
         <p><strong>Children:</strong> ${booking.children}</p>
         <p><strong>Amount paid:</strong> ${formatNaira(booking.totalAmountKobo)}</p>
+        <p><strong>Payment provider:</strong> ${escapeHtml(paymentProviderLabel(booking.paymentProvider))}</p>
+        <p><strong>Payment reference:</strong> ${escapeHtml(booking.paymentReference || "Not available")}</p>
+        <p><strong>Paid at:</strong> ${escapeHtml(formatDateTime(booking.paidAt))}</p>
       </body>
     </html>
   `;
 
   const guestResult = await resend.emails.send({
-    from: "Zaram Hotels <onboarding@resend.dev>",
+    from: FROM_EMAIL,
     to: [guestRecipient],
     subject: `Booking Confirmed - ${booking.bookingReference}`,
     html: guestHtml,
@@ -163,8 +256,21 @@ export async function sendBookingConfirmationEmails(
     );
   }
 
+  const receiptResult = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: [guestRecipient],
+    subject: `Payment Receipt - ${booking.bookingReference}`,
+    html: receiptHtml,
+  });
+
+  if (receiptResult.error) {
+    throw new Error(
+      `Payment receipt email failed: ${receiptResult.error.message}`
+    );
+  }
+
   const managementResult = await resend.emails.send({
-    from: "Zaram Hotels <onboarding@resend.dev>",
+    from: FROM_EMAIL,
     to: [managementRecipient],
     subject: `New Paid Booking - ${booking.bookingReference}`,
     html: managementHtml,
@@ -178,6 +284,7 @@ export async function sendBookingConfirmationEmails(
 
   return {
     guestEmailId: guestResult.data?.id ?? null,
+    receiptEmailId: receiptResult.data?.id ?? null,
     managementEmailId: managementResult.data?.id ?? null,
     testMode: TEST_MODE,
   };
@@ -355,7 +462,7 @@ export async function sendContactEnquiryEmails(
   const managementResult =
     await resend.emails.send({
       from:
-        "Zaram Hotels <onboarding@resend.dev>",
+        FROM_EMAIL,
       to: [
         managementRecipient,
       ],
@@ -378,7 +485,7 @@ export async function sendContactEnquiryEmails(
   const guestResult =
     await resend.emails.send({
       from:
-        "Zaram Hotels <onboarding@resend.dev>",
+        FROM_EMAIL,
       to: [
         guestRecipient,
       ],
